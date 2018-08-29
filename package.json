@@ -1,0 +1,52 @@
+{
+  "name": "DoctorsMarket",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "formik": "^0.10.5",
+    "hoist-non-react-statics": "^3.0.1",
+    "i": "^0.3.6",
+    "querystring": "^0.2.0",
+    "react": "^16.3.0-alpha.1",
+    "react-native": "0.54.0",
+    "react-native-action-button": "^2.8.5",
+    "react-native-actionsheet": "^2.4.2",
+    "react-native-app-settings": "^2.0.0",
+    "react-native-easy-toast": "^1.1.0",
+    "react-native-elements": "^0.19.1",
+    "react-native-gifted-chat": "^0.4.3",
+    "react-native-i18n": "^2.0.15",
+    "react-native-iphone-x-helper": "^1.0.3",
+    "react-native-linear-gradient": "^2.4.2",
+    "react-native-material-textfield": "^0.12.0",
+    "react-native-permissions": "^1.1.1",
+    "react-native-safari-view": "^2.1.0",
+    "react-native-step-indicator": "0.0.9",
+    "react-native-swiper": "^1.5.13",
+    "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^1.0.0-beta.27",
+    "react-navigation-backhandler": "^1.1.1",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-actions": "^2.2.1",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^2.7.4",
+    "redux-persist": "^4.3.1"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.5.0",
+    "react-test-renderer": "^16.3.0-alpha.1",
+    "babel-plugin-module-resolver": "^2.7.1",
+    "babel-plugin-transform-inline-environment-variables": "^6.8.0",
+    "babel-preset-flow": "^6.23.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
