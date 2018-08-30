@@ -17,7 +17,8 @@ import {
 } from "react-native";
 import { Locumapp } from "./src/routes";
 import Toast, { DURATION } from "react-native-easy-toast";
-
+import configureStore from "./src/store/configureStore";
+import { Provider } from "react-redux";
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -25,6 +26,18 @@ const styles = StyleSheet.create({
 });
 
 export default class App extends Component<{}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      load: true,
+      store: null
+    };
+  }
+  async componentWillMount() {
+    const store = await configureStore();
+    this.setState({ store });
+    console.log(store, "store");
+  }
   componentDidMount() {
     this.showToastListener = DeviceEventEmitter.addListener(
       "showToast",

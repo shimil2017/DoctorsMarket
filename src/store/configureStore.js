@@ -1,19 +1,19 @@
 import { createStore, applyMiddleware, compose } from "redux";
 //import createSagaMiddleware from "redux-saga";
 import thunkMiddleware from "redux-thunk";
-import { createLogger } from "redux-logger";
+//import { createLogger } from "redux-logger";
 import reducers from "./combineReducers";
 
 import { persistStore, autoRehydrate } from "redux-persist";
 import { AsyncStorage } from "react-native";
 const isDebuggingInChrome = false;
-const loggerMiddleware = createLogger();
+//const loggerMiddleware = createLogger();
 const middlewares = [thunkMiddleware];
 
 if (process.env.NODE_ENV === `development`) {
   const { logger } = require(`redux-logger`);
 
-  middlewares.push(loggerMiddleware);
+  // middlewares.push(loggerMiddleware);
 }
 
 export default function configureStore() {
