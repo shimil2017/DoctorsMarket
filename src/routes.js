@@ -28,6 +28,12 @@ import { globalStyles } from "./Themes/globalStyle";
 
     */
 const AuthStackNavigator = StackNavigator({
+  Auth: {
+    screen: AuthScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
@@ -35,17 +41,15 @@ const AuthStackNavigator = StackNavigator({
       headerTintColor: "#37a6ff"
     }
   },
-  Auth: {
-    screen: AuthScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
   Signup: {
     screen: SignupScreen
   },
   ForgotPassword: {
-    screen: ForgotPassword
+    screen: ForgotPassword,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff"
+    }
   }
 });
 
@@ -191,13 +195,6 @@ const MainTabNavigator = TabNavigator(
 );
 export const Locumapp = StackNavigator(
   {
-    WalkScreen: {
-      screen: WalkScreen,
-      navigationOptions: {
-        header: null
-      },
-      path: "welcome"
-    },
     auth: {
       screen: AuthStackNavigator,
       navigationOptions: {

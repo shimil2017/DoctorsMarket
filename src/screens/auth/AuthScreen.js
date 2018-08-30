@@ -4,16 +4,26 @@ import {
   ActivityIndicator,
   Text,
   View,
-  DeviceEventEmitter
+  Image,
+  DeviceEventEmitter,
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import Swiper from "react-native-swiper";
 import OpenAppSettings from "react-native-app-settings";
 import { Icon } from "react-native-elements";
 import Button from "../../components/button";
 import { ViewContainer } from "../../components/viewcontainer";
-import { colors } from "../../config";
+import {
+  colors,
+  normalize,
+  scale,
+  verticalScale,
+  moderateScale
+} from "../../config";
 import { resetNavigationTo } from "../../utils";
-
+import { Images } from "../../Themes/Images";
+const { height, width } = Dimensions.get("window");
 //import Button from "../../components/button";
 const styles = {
   wrapper: {},
@@ -42,6 +52,10 @@ const styles = {
   }
 };
 export default class AuthScreen extends Component {
+  constructor(props) {
+    super(props);
+    console.log(normalize, "normalize");
+  }
   loginUser = () => {
     const {
       navigation: { navigate }
@@ -61,38 +75,129 @@ export default class AuthScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button
-          label={"LOGIN"}
-          disabled={false}
-          onPress={() => this.loginUser()}
-          styles={{
-            button: styles.btnStyle,
-
-            label: [
-              styles.btnTextStyle,
-              {
-                fontSize: 20
-              }
-            ]
+      <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View
+          style={{
+            flex: 0.3,
+            paddingTop: 45,
+            paddingLeft: 36,
+            alignItems: "flex-start",
+            justifyContent: "center"
           }}
-        />
-
-        <Button
-          label={"REGISTER NOW"}
-          disabled={false}
-          onPress={() => this.loginUser()}
-          styles={{
-            button: styles.btnStyle,
-
-            label: [
-              styles.btnTextStyle,
-              {
-                fontSize: 20
-              }
-            ]
+        >
+          <Image
+            source={require("../../images/monogram.png")}
+            style={{ width: 45, height: 80 }}
+          />
+        </View>
+        <View style={{ flex: 0.2, paddingLeft: 36 }}>
+          <Text
+            style={{
+              fontFamily: "SF-UI-Display-Light",
+              textAlign: "left",
+              fontSize: normalize(30),
+              color: "#000000",
+              opacity: 0.4
+            }}
+          >
+            Welcome to
+          </Text>
+          <Text
+            style={{
+              fontFamily: "SF-UI-Display-Light",
+              textAlign: "left",
+              fontSize: normalize(30),
+              color: "#000000",
+              opacity: 0.4
+            }}
+          >
+            Doctors Market
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 0.4,
+            alignItems: "center",
+            justifyContent: "flex-start"
           }}
-        />
+        >
+          <Button
+            label={"LOGIN"}
+            disabled={false}
+            onPress={() => this.loginUser()}
+            styles={{
+              button: {
+                height: verticalScale(50),
+                width: width - 70,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 5,
+                paddingLeft: 15,
+                paddingRight: 15,
+                borderRadius: 50,
+                marginVertical: 5
+              },
+
+              label: [
+                {
+                  fontSize: normalize(16),
+                  color: "#FFFFFF",
+                  letterSpacing: 5
+                }
+              ]
+            }}
+          />
+
+          <TouchableOpacity
+            style={{
+              height: verticalScale(50),
+              width: width - 70,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 5,
+              paddingLeft: 15,
+              paddingRight: 15,
+              borderRadius: 50,
+              marginVertical: 5,
+              backgroundColor: "#fff",
+              borderWidth: 1,
+              borderColor: "#02B2FE",
+              marginTop: verticalScale(18)
+            }}
+            onPress={() => this.registerUser()}
+          >
+            <Text
+              style={{
+                fontFamily: "SF-UI-Display-Bold",
+                color: "#02B2FE",
+                letterSpacing: 5
+              }}
+            >
+              REGISTER NOW
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flex: 0.2,
+            alignItems: "center",
+            justifyContent: "flex-end"
+          }}
+        >
+          <Text
+            onPress={() => alert("privacy")}
+            style={{
+              textAlign: "center",
+              marginBottom: verticalScale(40),
+              marginHorizontal: scale(35),
+              fontFamily: "SF-UI-Display-Light",
+              opacity: 0.5
+            }}
+          >
+            By tapping on Register Now, I agree to Doctors Market's Terms of
+            Service & Privacy Policy.
+          </Text>
+        </View>
       </View>
     );
   }

@@ -1,31 +1,15 @@
 import React, { Component } from "react";
-import {
-  AppRegistry,
-  ScrollView,
-  View,
-  Text,
-  Dimensions,
-  KeyboardAvoidingView
-} from "react-native";
-const { height, width } = Dimensions.get("window");
+import { AppRegistry, ScrollView, View } from "react-native";
+
 import { TextField } from "react-native-material-textfield";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import Regex from "../../utils/regex";
 import NextButton from "../../components/nextbutton";
+import StepIndicator from "../../components/stepindicator";
 import Entypo from "react-native-vector-icons/Entypo";
-import Button from "../../components/button";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  colors,
-  normalize,
-  scale,
-  verticalScale,
-  moderateScale
-} from "../../config";
 let styles = {
   scroll: {
-    backgroundColor: "#fff",
-    flex: 1
+    backgroundColor: "#fff"
   },
 
   container: {
@@ -106,7 +90,7 @@ class LoginScreen extends Component {
   }
 
   onChangeText(text) {
-    ["email", "password"]
+    ["firstname", "lastname", "about", "email", "password"]
       .map(name => ({ name, ref: this[name] }))
       .forEach(({ name, ref }) => {
         if (ref.isFocused()) {
@@ -115,11 +99,11 @@ class LoginScreen extends Component {
       });
   }
 
-  onAccessoryPress = () => {
+  onAccessoryPress() {
     this.setState(({ secureTextEntry }) => ({
       secureTextEntry: !secureTextEntry
     }));
-  };
+  }
 
   onSubmitFirstName() {
     this.lastname.focus();
@@ -144,7 +128,7 @@ class LoginScreen extends Component {
   onSubmit() {
     let errors = {};
 
-    ["email", "password"].forEach(name => {
+    ["firstname", "lastname", "email", "password"].forEach(name => {
       let value = this[name].value();
 
       if (!value) {
@@ -183,36 +167,63 @@ class LoginScreen extends Component {
 
   render() {
     let { errors = {}, secureTextEntry, ...data } = this.state;
-    ///let { firstname = "name", lastname = "house" } = data;
-    const {
-      navigation: { navigate }
-    } = this.props;
+    let { firstname = "name", lastname = "house" } = data;
 
-    let defaultEmail = "test@gmail.com".replace(/\s+/g, "_").toLowerCase();
+    let defaultEmail = `${firstname}@${lastname}.com`
+      .replace(/\s+/g, "_")
+      .toLowerCase();
 
     return (
-      <KeyboardAwareScrollView style={{ padding: 8, backgroundColor: "#fff" }}>
-        <View style={{ flex: 0.2, paddingHorizontal: scale(10) }}>
-          <Text
-            style={{
-              fontFamily: "SF-UI-Display-Light",
-              fontSize: normalize(36),
-              marginLeft: scale(10),
-              color: "#000000",
-              opacity: 0.8
-            }}
-          >
-            Login
-          </Text>
-        </View>
-        <View
-          style={{
-            margin: 8,
-            marginTop: 24,
-            flex: 0.3,
-            paddingHorizontal: scale(10)
-          }}
-        >
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.contentContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <StepIndicator
+          customStyles={styles.indicatorStyle}
+          currentPosition={1}
+        />
+        <View style={styles.container}>
+          <TextField
+            ref={this.firstnameRef}
+            value={data.firstname}
+            autoCorrect={false}
+            tintColor={"#37a6ff"}
+            enablesReturnKeyAutomatically={true}
+            onFocus={this.onFocus}
+            onChangeText={this.onChangeText}
+            onSubmitEditing={this.onSubmitFirstName}
+            returnKeyType="next"
+            label="First Name"
+            error={errors.firstname}
+          />
+
+          <TextField
+            ref={this.lastnameRef}
+            value={data.lastname}
+            autoCorrect={false}
+            enablesReturnKeyAutomatically={true}
+            onFocus={this.onFocus}
+            onChangeText={this.onChangeText}
+            onSubmitEditing={this.onSubmitLastName}
+            returnKeyType="next"
+            label="Last Name"
+            error={errors.lastname}
+          />
+
+          <TextField
+            ref={this.aboutRef}
+            value={data.about}
+            onFocus={this.onFocus}
+            onChangeText={this.onChangeText}
+            onSubmitEditing={this.onSubmitAbout}
+            returnKeyType="next"
+            multiline={true}
+            blurOnSubmit={true}
+            label="About (optional)"
+            characterRestriction={140}
+          />
+
           <TextField
             ref={this.emailRef}
             value={data.email}
@@ -227,7 +238,6 @@ class LoginScreen extends Component {
             returnKeyType="next"
             label="Email Address"
             error={errors.email}
-            tintColor={"#02B2FE"}
           />
 
           <TextField
@@ -246,66 +256,21 @@ class LoginScreen extends Component {
             error={errors.password}
             title="Choose wisely"
             maxLength={30}
-            tintColor={"#02B2FE"}
             characterRestriction={20}
             renderAccessory={this.renderPasswordAccessory}
           />
-        </View>
-        <View
-          style={{
-            width,
-            height: 15,
-            alignItems: "flex-end"
-          }}
-        >
-          <Text
-            onPress={() => navigate("ForgotPassword")}
-            style={{
-              fontFamily: "SF-UI-Display-Light",
-              fontSize: normalize(16),
-              paddingRight: scale(32),
-              letterSpacing: 10,
-              color: "#02B2FE"
-            }}
-          >
-            Forgot?
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 0.5,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Button
-            label={"LOGIN"}
-            disabled={false}
-            onPress={() => alert("progress")}
-            styles={{
-              button: {
-                height: verticalScale(50),
-                width: width - 70,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 5,
-                paddingLeft: 15,
-                paddingRight: 15,
-                borderRadius: 50,
-                marginVertical: verticalScale(40)
-              },
 
-              label: [
-                {
-                  fontSize: normalize(16),
-                  color: "#FFFFFF",
-                  letterSpacing: 5
-                }
-              ]
-            }}
+          <TextField
+            value={data.lastname}
+            label="House"
+            title="Derived from last name"
+            disabled={true}
           />
         </View>
-      </KeyboardAwareScrollView>
+        <NextButton />
+
+        <View style={styles.container} />
+      </ScrollView>
     );
   }
 }

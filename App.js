@@ -43,7 +43,6 @@ export default class App extends Component<{}> {
           translucent
           animated
         />
-
         <Locumapp />
         <Toast ref={ref => (this.toast = ref)} opacity={0.7} />
       </View>

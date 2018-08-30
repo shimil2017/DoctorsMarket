@@ -9,6 +9,13 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/EvilIcons";
 import LinearGradient from "react-native-linear-gradient";
+import {
+  colors,
+  normalize,
+  scale,
+  verticalScale,
+  moderateScale
+} from "../config";
 const { height, width } = Dimensions.get("window");
 const Button = props => {
   function getContent() {
@@ -56,29 +63,29 @@ const Button = props => {
   }
 
   return (
-    <LinearGradient
-      colors={["#39aaff", "#42c3f3", "#2cf6d0", "#49ffc7"]}
-      style={styles.linearGradient}
-      start={{ x: 0, y: 1 }}
-      end={{ x: 1, y: 1 }}
+    <TouchableOpacity
+      onPress={props.onPress}
+      disabled={props.disabled}
+      style={[
+        props.noDefaultStyles ? "" : styles.button,
+        props.styles ? props.styles.button : ""
+      ]}
     >
-      <TouchableOpacity
-        onPress={props.onPress}
-        disabled={props.disabled}
-        style={[
-          props.noDefaultStyles ? "" : styles.button,
-          props.styles ? props.styles.button : ""
-        ]}
+      <LinearGradient
+        colors={["#00B1FF", "#7EF3C7"]}
+        style={styles.linearGradient}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 1 }}
       >
         {getContent()}
-      </TouchableOpacity>
-    </LinearGradient>
+      </LinearGradient>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   labelStyle: {
-    fontSize: 16
+    fontFamily: "SF-UI-Display-Black"
   },
   button: {
     alignItems: "center",
@@ -87,8 +94,8 @@ const styles = StyleSheet.create({
     height: 40
   },
   linearGradient: {
-    height: 50,
-    width: width - 80,
+    height: verticalScale(50),
+    width: width - 70,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,

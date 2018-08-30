@@ -1,4 +1,4 @@
 const images = {
-  //  activeInfoIcon: require("../Images/Icons/icon-more-active.png")
+  monogram: require("../images/monogram.png")
 };
 export default images;

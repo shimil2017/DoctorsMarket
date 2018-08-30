@@ -1,16 +1,19 @@
+import { normalize } from "../config";
+
 const type = {
-  base: "Montserrat-Light",
-  bold: "Montserrat-SemiBold",
-  semiBold: "Montserrat-SemiBold",
-  medium: "Montserrat-Medium"
+  black: "SF-UI-Display-Black",
+  bold: "SF-UI-Display-Bold",
+  heavy: "SF-UI-Display-Heavy",
+  medium: "SF-UI-Display-Medium",
+  light: "SF-UI-Display-Light"
 };
 
 const size = {
-  h1: 38,
-  h2: 34,
-  h5: 20,
-  regular: 17,
-  medium: 14
+  h1: normalize(38),
+  h2: normalize(34),
+  h5: normalize(20),
+  regular: normalize(17),
+  medium: normalize(14)
 };
 
 const style = {
@@ -33,6 +36,14 @@ const style = {
   description: {
     fontFamily: type.base,
     fontSize: size.medium
+  },
+  boldh1: {
+    fontFamily: type.bold,
+    fontSize: size.h1
+  },
+  boldh2: {
+    fontFamily: type.bold,
+    fontSize: size.h2
   }
 };
 

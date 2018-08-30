@@ -7,7 +7,7 @@ export default class ProfileScreen extends Component {
   signOutUser = () => {
     const { navigation } = this.props;
 
-    resetNavigationTo("WalkScreen", navigation);
+    resetNavigationTo("auth", navigation);
   };
   render() {
     return (
