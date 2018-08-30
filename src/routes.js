@@ -8,7 +8,7 @@ import {
 import { Icon } from "react-native-elements";
 import { colors } from "./config";
 import LoginScreen from "./screens/auth/LoginScreen";
-import SignupScreen from "./screens/auth/SignupScreen";
+//import SignupScreen from "./screens/auth/SignupScreen";
 import WalkScreen from "./screens/auth/WalkScreen";
 import ForgotPassword from "./screens/auth/ForgotPassword";
 import InvoicesScreen from "./screens/invoices/InvoicesScreen";
@@ -17,8 +17,13 @@ import ProfileScreen from "./screens/profile/ProfileScreen";
 import SheduleScreen from "./screens/shedule/SheduleScreen";
 import ChatList from "./screens/chat/ChatList";
 import AuthScreen from "./screens/auth/AuthScreen";
+import SignupFormone from "./screens/auth/SignupFormone";
+import SignupFormtwo from "./screens/auth/SignupFormtwo";
+import SignupFormthree from "./screens/auth/SignupFormthree";
+import SignupFormfour from "./screens/auth/SignupFormfour";
 import EIcon from "react-native-vector-icons/Ionicons";
 import { globalStyles } from "./Themes/globalStyle";
+import SignupupFormfour from "./screens/auth/SignupFormfour";
 /*
  headerStyle: config.navigation.tab
       ? globalStyles.header
@@ -41,8 +46,33 @@ const AuthStackNavigator = StackNavigator({
       headerTintColor: "#37a6ff"
     }
   },
-  Signup: {
-    screen: SignupScreen
+  Signupone: {
+    screen: SignupFormone,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff"
+    }
+  },
+  Signuptwo: {
+    screen: SignupFormtwo,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff"
+    }
+  },
+  Signupthree: {
+    screen: SignupFormthree,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff"
+    }
+  },
+  Signupfour: {
+    screen: SignupupFormfour,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff"
+    }
   },
   ForgotPassword: {
     screen: ForgotPassword,

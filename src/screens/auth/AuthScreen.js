@@ -68,9 +68,12 @@ export default class AuthScreen extends Component {
       navigation: { navigate }
     } = this.props;
     */
-    const { navigation } = this.props;
+    const {
+      navigation: { navigate }
+    } = this.props;
+    navigate("Signupone");
     //alert("huu");
-    resetNavigationTo("Main", navigation);
+    // resetNavigationTo("Main", navigation);
   };
 
   render() {

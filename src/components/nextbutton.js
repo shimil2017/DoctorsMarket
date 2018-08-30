@@ -13,9 +13,15 @@ export default class NextButton extends Component {
   render() {
     return (
       <ActionButton
-        buttonColor={"red"}
-        offsetY={isIphoneX() ? 95 : 70}
-        offsetX={10}
+        onPress={this.props.onPress}
+        buttonColor={"#00B1FF"}
+        offsetY={
+          isIphoneX() ? 95 - this.props.reducer : 70 - this.props.reducer
+        }
+        offsetX={18}
+        renderIcon={() => (
+          <Icon name="md-arrow-forward" size={25} color={"#fff"} />
+        )}
       />
     );
   }
