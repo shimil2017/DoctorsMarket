@@ -191,7 +191,13 @@ class LoginScreen extends Component {
     let defaultEmail = "test@gmail.com".replace(/\s+/g, "_").toLowerCase();
 
     return (
-      <KeyboardAwareScrollView style={{ padding: 8, backgroundColor: "#fff" }}>
+      <KeyboardAwareScrollView
+        style={{
+          padding: 8,
+          backgroundColor: "#fff",
+          paddingTop: verticalScale(8)
+        }}
+      >
         <View style={{ flex: 0.2, paddingHorizontal: scale(10) }}>
           <Text
             style={{

@@ -24,10 +24,11 @@ export default class ForgotPassword extends Component {
         style={{
           flex: 1,
           backgroundColor: "#fff",
-          paddingHorizontal: normalize(10)
+          paddingHorizontal: normalize(10),
+          paddingTop: verticalScale(8)
         }}
       >
-        <View style={{ flex: 0.2 }}>
+        <View style={{ flex: 0.2, paddingVertical: verticalScale(5) }}>
           <Text
             style={{
               fontFamily: "SF-UI-Display-Light",
@@ -37,7 +38,7 @@ export default class ForgotPassword extends Component {
               opacity: 0.8
             }}
           >
-            ForgotPassword?
+            Forgot Password ?
           </Text>
         </View>
         <View style={{ flex: 0.1 }}>
