@@ -6,7 +6,8 @@ import {
   normalize,
   scale,
   verticalScale,
-  moderateScale
+  moderateScale,
+  fonts
 } from "../../config";
 import { TextField } from "react-native-material-textfield";
 import Button from "../../components/button";
@@ -31,7 +32,7 @@ export default class ForgotPassword extends Component {
         <View style={{ flex: 0.2, paddingVertical: verticalScale(5) }}>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily: fonts.fontPrimaryLight,
               fontSize: normalize(36),
               marginLeft: scale(10),
               color: "#000000",
@@ -44,7 +45,7 @@ export default class ForgotPassword extends Component {
         <View style={{ flex: 0.1 }}>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily: fonts.fontPrimaryLight,
               fontSize: normalize(14),
               marginLeft: scale(10),
               marginTop: normalize(5),

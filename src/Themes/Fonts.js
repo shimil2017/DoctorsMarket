@@ -1,11 +1,11 @@
 import { normalize } from "../config";
-
-const type = {
-  black: "SF-UI-Display-Black",
-  bold: "SF-UI-Display-Bold",
-  heavy: "SF-UI-Display-Heavy",
-  medium: "SF-UI-Display-Medium",
-  light: "SF-UI-Display-Light"
+import {Platform } from "react-native";
+ const type = {
+  black:Platform.OS==='ios'?'SFUIDisplay-Black':'SF-UI-Display-Black',
+  bold: Platform.OS==='ios'?'SFUIDisplay-Black':'SF-UI-Display-Black',
+  heavy:Platform.OS==='ios'?'SFUIDisplay-Black':'SF-UI-Display-Black',
+  medium: Platform.OS==='ios'?'SFUIDisplay-Black':'SF-UI-Display-Black',
+  light: Platform.OS==='ios'?'SFUIDisplay-Black':'SF-UI-Display-Black',
 };
 
 const size = {

@@ -14,7 +14,8 @@ import {
   normalize,
   scale,
   verticalScale,
-  moderateScale
+  moderateScale,
+  fonts
 } from "../config";
 const { height, width } = Dimensions.get("window");
 const Button = props => {
@@ -85,7 +86,7 @@ const Button = props => {
 
 const styles = StyleSheet.create({
   labelStyle: {
-    fontFamily: "SF-UI-Display-Black"
+    fontFamily: fonts.fontPrimaryBlack
   },
   button: {
     alignItems: "center",

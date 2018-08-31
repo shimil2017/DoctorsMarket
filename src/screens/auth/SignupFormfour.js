@@ -7,7 +7,8 @@ import {
   normalize,
   scale,
   verticalScale,
-  moderateScale
+  moderateScale,
+  fonts
 } from "../../config";
 import Button from "../../components/button";
 import CheckBox from "../../components/checkbox";
@@ -51,7 +52,8 @@ export default class SignupupFormfour extends Component {
         style={{
           flex: 1,
           backgroundColor: "#fff",
-          paddingHorizontal: scale(10)
+          paddingHorizontal: scale(10),         
+          paddingTop:verticalScale(18)
         }}
       >
         <StepIndicator
@@ -59,10 +61,10 @@ export default class SignupupFormfour extends Component {
           currentPosition={3}
           stepCount={4}
         />
-        <View style={{ flex: 0.2, paddingHorizontal: scale(10) }}>
+        <View style={{ flex: 0.2, paddingHorizontal: scale(10), paddingTop:verticalScale(18) }}>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily:fonts.fontPrimaryLight,
               fontSize: normalize(36),
               marginVertical: verticalScale(10),
               color: "#000000",
@@ -75,7 +77,7 @@ export default class SignupupFormfour extends Component {
         <View style={{ flex: 0.8, marginHorizontal: scale(13) }}>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily:fonts.fontPrimaryLight,
               fontSize: normalize(15),
               marginVertical: verticalScale(10),
               color: "#000000",
@@ -98,18 +100,18 @@ export default class SignupupFormfour extends Component {
           <View
             style={{
               width,
+              backgroundColor:"red",
               height: verticalScale(25),
               flexDirection: "row",
               marginLeft: scale(36),
               marginVertical: verticalScale(20)
             }}
           >
-            <View style={{ flex: 0.1, justifyContent: "center" }}>
+            <View style={{ flex: 0.1, justifyContent: "center"  }}>
               <CheckBox
                 label=""
                 size={25}
-                color={"#02B2FE"}
-                size={20}
+                color={"#02B2FE"}               
                 checked={this.state.isChecked}
                 onPress={this.handlePressCheckedBox}
               />
@@ -117,7 +119,7 @@ export default class SignupupFormfour extends Component {
             <View style={{ flex: 0.9, justifyContent: "flex-start" }}>
               <Text
                 style={{
-                  fontFamily: "SF-UI-Display-Light",
+                  fontFamily:fonts.fontPrimaryLight,
                   fontSize: normalize(15),
 
                   color: "#000000",

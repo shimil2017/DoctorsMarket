@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Dimensions, TouchableOpacity } from "react-native";
-import { scale, verticalScale, normalize } from "../config";
+import { scale, verticalScale, normalize,fonts } from "../config";
 const Genderfield = props => {
   //  console.log(props.label, "props");
   return (
@@ -18,10 +18,10 @@ const Genderfield = props => {
     >
       <Text
         style={{
-          fontFamily: "SF-UI-Display-Regular",
+          fontFamily: fonts.fontPrimaryRegular,
           fontSize: normalize(15),
           color: "#000000",
-          opacity: 0.3
+          opacity: 0.5
         }}
       >
         {props.label}

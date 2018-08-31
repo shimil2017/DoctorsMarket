@@ -20,7 +20,8 @@ import {
   normalize,
   scale,
   verticalScale,
-  moderateScale
+  moderateScale,
+  fonts
 } from "../../config";
 let styles = {
   scroll: {
@@ -201,7 +202,7 @@ class LoginScreen extends Component {
         <View style={{ flex: 0.2, paddingHorizontal: scale(10) }}>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily: fonts.fontPrimaryLight,
               fontSize: normalize(36),
               marginLeft: scale(10),
               color: "#000000",
@@ -267,10 +268,10 @@ class LoginScreen extends Component {
           <Text
             onPress={() => navigate("ForgotPassword")}
             style={{
-              fontFamily: "SF-UI-Display-Light",
-              fontSize: normalize(16),
+              fontFamily: fonts.fontPrimaryLight,
+              fontSize: normalize(13),
               paddingRight: scale(32),
-              letterSpacing: 10,
+              letterSpacing: 2,
               color: "#02B2FE"
             }}
           >

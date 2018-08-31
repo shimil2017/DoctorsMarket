@@ -5,7 +5,8 @@ import {
   normalize,
   scale,
   verticalScale,
-  moderateScale
+  moderateScale,
+  fonts
 } from "../../config";
 const { height, width } = Dimensions.get("window");
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -49,7 +50,8 @@ export default class SignupFormtwo extends Component {
           style={{
             flex: 1,
             backgroundColor: "#fff",
-            paddingHorizontal: scale(10)
+            paddingHorizontal: scale(10),
+            paddingTop:verticalScale(18)
           }}
         >
           <StepIndicator
@@ -57,10 +59,10 @@ export default class SignupFormtwo extends Component {
             currentPosition={1}
             stepCount={4}
           />
-          <View style={{ flex: 0.2, paddingHorizontal: scale(10) }}>
+          <View style={{ flex: 0.2, paddingHorizontal: scale(10),paddingTop:verticalScale(10) }}>
             <Text
               style={{
-                fontFamily: "SF-UI-Display-Light",
+                fontFamily: fonts.fontPrimaryLight,
                 fontSize: normalize(36),
                 marginVertical: verticalScale(10),
                 color: "#000000",

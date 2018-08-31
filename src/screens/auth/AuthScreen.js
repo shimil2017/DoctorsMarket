@@ -19,7 +19,8 @@ import {
   normalize,
   scale,
   verticalScale,
-  moderateScale
+  moderateScale,
+  fonts
 } from "../../config";
 import { resetNavigationTo } from "../../utils";
 import { Images } from "../../Themes/Images";
@@ -96,7 +97,7 @@ export default class AuthScreen extends Component {
         <View style={{ flex: 0.2, paddingLeft: 36 }}>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily: fonts.fontPrimaryLight,
               textAlign: "left",
               fontSize: normalize(30),
               color: "#000000",
@@ -107,7 +108,7 @@ export default class AuthScreen extends Component {
           </Text>
           <Text
             style={{
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily: fonts.fontPrimaryLight,
               textAlign: "left",
               fontSize: normalize(30),
               color: "#000000",
@@ -171,7 +172,7 @@ export default class AuthScreen extends Component {
           >
             <Text
               style={{
-                fontFamily: "SF-UI-Display-Bold",
+                fontFamily: fonts.fontPrimaryBold,
                 color: "#02B2FE",
                 letterSpacing: 5
               }}
@@ -193,7 +194,7 @@ export default class AuthScreen extends Component {
               textAlign: "center",
               marginBottom: verticalScale(40),
               marginHorizontal: scale(35),
-              fontFamily: "SF-UI-Display-Light",
+              fontFamily: fonts.fontPrimaryLight,
               opacity: 0.5
             }}
           >
