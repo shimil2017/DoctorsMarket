@@ -100,23 +100,22 @@ export default class SignupupFormfour extends Component {
           <View
             style={{
               width,
-              backgroundColor:"red",
-              height: verticalScale(25),
-              flexDirection: "row",
-              marginLeft: scale(36),
-              marginVertical: verticalScale(20)
+              justifyContent:"center",
+              height: verticalScale(70),
+              flexDirection: "row", 
+              marginHorizontal:scale(15)            
             }}
           >
-            <View style={{ flex: 0.1, justifyContent: "center"  }}>
+           <View style={{ flex: 0.1,alignItems:"flex-start", justifyContent: "center" }}>
               <CheckBox
                 label=""
-                size={25}
+                size={20}
                 color={"#02B2FE"}               
                 checked={this.state.isChecked}
                 onPress={this.handlePressCheckedBox}
               />
             </View>
-            <View style={{ flex: 0.9, justifyContent: "flex-start" }}>
+            <View style={{ flex: 0.9, justifyContent: "center" }}>
               <Text
                 style={{
                   fontFamily:fonts.fontPrimaryLight,
@@ -129,7 +128,9 @@ export default class SignupupFormfour extends Component {
                 I accept the Terms of Service
               </Text>
             </View>
+        
           </View>
+           
         </View>
 
         <View
