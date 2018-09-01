@@ -31,7 +31,8 @@ class SignupFormone extends Component {
       phonenumbererror: "",
       gendererror: "",
       passworderror: "",
-      matcherror: ""
+      matcherror: "",
+      valuated: false
     };
   }
 
@@ -64,62 +65,74 @@ class SignupFormone extends Component {
       passworderror,
       matcherror
     } = this.state;
-
-    if (!Regex.validateStringMinimumLength2(firstname))
+    this.setState({ valuated: true });
+    if (!Regex.validateStringMinimumLength2(firstname)) {
       this.setState({
         firstnameerror: "Name should contain minum two charecter"
       });
+      return;
+    }
 
-    if (!Regex.validateStringMinimumLength2(lastname))
+    if (!Regex.validateStringMinimumLength2(lastname)) {
       this.setState({
         secondnameerror: "Name should contain minum two charecter"
       });
+      return;
+    }
 
-    if (firstname.length > 2 && !Regex.validateString(firstname))
+    if (firstname.length > 2 && !Regex.validateString(firstname)) {
       this.setState({
         firstnameerror: "Name contain illegal charecter"
       });
-    if (lastname.length > 2 && !Regex.validateString(lastname))
+      return;
+    }
+
+    if (lastname.length > 2 && !Regex.validateString(lastname)) {
       this.setState({
         secondnameerror: "Name contain illegal charecter"
       });
+      return;
+    }
 
-    if (!Regex.validateEmail(email))
+    if (!Regex.validateEmail(email)) {
       this.setState({
         emailerror: "Please enter valid email adress"
       });
+      return;
+    }
 
-    if (!Regex.validateMobile(phonenumber))
+    if (!Regex.validateMobile(phonenumber)) {
       this.setState({
         phonenumbererror: "Please enter valid mobile numer"
       });
-    if (!gender)
+      return;
+    }
+
+    if (!gender) {
       this.setState({
         gendererror: "Please select gender"
       });
-    if (!password)
+      return;
+    }
+
+    if (!password) {
       this.setState({
         passworderror: "Please enter a password"
       });
+      return;
+    }
+
     if (
       password != this.state.confirmpassword ||
       this.state.confirmpassword.length == 0
-    )
+    ) {
       this.setState({
         matcherror: "Password does not match"
       });
-
-    if (
-      !firstnameerror &&
-      !secondnameerror &&
-      !emailerror &&
-      !phonenumbererror &&
-      !gendererror &&
-      !passworderror &&
-      !matcherror
-    ) {
-      navigate("Signuptwo");
+      return;
     }
+
+    navigate("Signuptwo");
   };
   _handleFocusNextField = nextField => {
     this.refs[nextField].focus();

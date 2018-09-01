@@ -52,17 +52,13 @@ const styles = {
     fontWeight: "bold"
   }
 };
-import Spinner from "react-native-loading-spinner-overlay";
 
 export default class AuthScreen extends Component {
   constructor(props) {
     super(props);
     console.log(normalize, "normalize");
-    this.state = {
-      visible: false
-    };
   }
-  componentDidMount() {}
+
   loginUser = () => {
     const {
       navigation: { navigate }
@@ -74,7 +70,7 @@ export default class AuthScreen extends Component {
     const {
       navigation: { navigate }
     } = this.props;
-    navigate("Signuptwo");
+    navigate("Signupone");
   };
 
   render() {
@@ -202,11 +198,6 @@ export default class AuthScreen extends Component {
             Service & Privacy Policy.
           </Text>
         </View>
-        <Spinner
-          visible={this.state.visible}
-          textContent={"Loading..."}
-          textStyle={{ color: "#FFF" }}
-        />
       </View>
     );
   }

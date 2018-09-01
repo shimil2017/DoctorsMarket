@@ -49,6 +49,7 @@ export default class App extends Component<{}> {
   }
 
   render() {
+    console.ignoredYellowBox = ["Warning:"];
     if (this.state.store == null) {
       return (
         <View
@@ -73,7 +74,11 @@ export default class App extends Component<{}> {
             animated
           />
           <Locumapp />
-          <Toast ref={ref => (this.toast = ref)} opacity={0.7} />
+          <Toast
+            ref={ref => (this.toast = ref)}
+            opacity={0.7}
+            style={{ backgroundColor: "#02B2FE" }}
+          />
         </View>
       </Provider>
     );

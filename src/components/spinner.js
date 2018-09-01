@@ -1,43 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View, Text, Modal, ActivityIndicator } from "react-native";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "transparent",
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  background: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  textContainer: {
-    flex: 1,
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute"
-  },
-  textContent: {
-    top: 80,
-    height: 50,
-    fontSize: 20,
-    fontWeight: "bold"
-  }
-});
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import Modal from "react-native-modalbox";
 
 export default class Spinner extends Component {
   constructor(props) {
@@ -46,22 +10,43 @@ export default class Spinner extends Component {
       visible: this.props.visible
     };
   }
+  close = () => {
+    this.setState({ visible: false });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.visible !== this.state.visible) {
+      this.setState({ visible: false });
+    }
+  }
   render() {
-    <Modal
-      onRequestClose={() => this._handleOnRequestClose()}
-      supportedOrientations={["landscape", "portrait"]}
-      transparent
-      visible={this.props.visible}
-    >
+    // alert(this.state.visible);
+    return (
+      <Modal
+        backdrop={false}
+        isOpen={this.state.visible}
+        onClosed={() => this.setState({ visible: false })}
+        style={{
+          flex: 1,
+          backgroundColor: "transparent",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        position={"center"}
       >
-      <View style={styles.background}>
-        <ActivityIndicator color={"#FFF"} size={"large"} style={{ flex: 1 }} />
-        <View style={styles.textContainer}>
-          <Text style={[styles.textContent, this.props.textStyle]}>
-            Loading...
-          </Text>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "transparent",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <ActivityIndicator color={"#02B2FE"} size={"large"} />
+
+          <Text style={{ color: "#02B2FE" }}>{this.props.text}</Text>
         </View>
-      </View>
-    </Modal>;
+      </Modal>
+    );
   }
 }
