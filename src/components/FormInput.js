@@ -1,54 +1,27 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage
-} from "react-native-elements";
-
+import { TextField } from "react-native-material-textfield";
 class FormInputbox extends Component {
-  handleOnChangeText = text => {
-    const {
-      onChangeText,
-      field: { name }
-    } = this.props;
-    onChangeText(name, text);
-  };
-
-  handleOnBlur = () => {
-    const {
-      onBlur,
-      field: { name }
-    } = this.props;
-    onBlur(name);
-  };
-
   render() {
-    const {
-      label,
-      field: { name, value },
-      form: { touched, errors },
-      labelStyle,
-      inputStyle,
-      errorTextStyle,
-      input,
-      ...restProps
-    } = this.props;
+    const { label, values, defaultValue, onFocus } = this.props;
     return (
-      <View>
-        <FormLabel labelStyle={labelStyle}>{label}</FormLabel>
-        <FormInput
-          inputStyle={inputStyle}
-          {...restProps}
-          onChangeText={this.handleOnChangeText}
-          onBlur={this.handleOnBlur}
-          value={value}
-          underlineColorAndroid="#009688"
+      <View style={{ flex: 1 }}>
+        <TextField
+          ref={this.emailRef}
+          value={"dfd"}
+          defaultValue={"lastname"}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          enablesReturnKeyAutomatically={true}
+          onFocus={onFocus}
+          onChangeText={this.onChangeText}
+          onSubmitEditing={this.onSubmitEmail}
+          returnKeyType="next"
+          label="password"
+          error={""}
+          tintColor={"#02B2FE"}
         />
-        {touched[name] &&
-          errors[name] && (
-            <FormValidationMessage>{errors[name]}</FormValidationMessage>
-          )}
       </View>
     );
   }

@@ -13,7 +13,8 @@ import {
   Text,
   View,
   StatusBar,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  ActivityIndicator
 } from "react-native";
 import { Locumapp } from "./src/routes";
 import Toast, { DURATION } from "react-native-easy-toast";
@@ -48,17 +49,33 @@ export default class App extends Component<{}> {
   }
 
   render() {
+    if (this.state.store == null) {
+      return (
+        <View
+          style={{
+            backgroundColor: "red",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <ActivityIndicator />
+        </View>
+      );
+    }
     return (
-      <View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="white"
-          translucent
-          animated
-        />
-        <Locumapp />
-        <Toast ref={ref => (this.toast = ref)} opacity={0.7} />
-      </View>
+      <Provider store={this.state.store}>
+        <View style={styles.container}>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="white"
+            translucent
+            animated
+          />
+          <Locumapp />
+          <Toast ref={ref => (this.toast = ref)} opacity={0.7} />
+        </View>
+      </Provider>
     );
   }
 }

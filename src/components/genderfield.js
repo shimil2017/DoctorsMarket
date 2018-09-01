@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Dimensions, TouchableOpacity } from "react-native";
-import { scale, verticalScale, normalize,fonts } from "../config";
+import { scale, verticalScale, normalize, fonts } from "../config";
 const Genderfield = props => {
   //  console.log(props.label, "props");
   return (
@@ -13,7 +13,7 @@ const Genderfield = props => {
         alignItems: "center",
         justifyContent: "center",
         borderWidth: 1,
-        borderColor: "#CCCCCC"
+        borderColor: props.selected ? "#02B2FE" : "#CCCCCC"
       }}
     >
       <Text

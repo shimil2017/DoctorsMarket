@@ -13,36 +13,26 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import StepIndicator from "../../components/stepindicator";
 import { TextField } from "react-native-material-textfield";
 import Icon from "react-native-vector-icons/Ionicons";
-let styles = {
-  indicatorStyle: {
-    stepIndicatorSize: 15,
-    currentStepIndicatorSize: 20,
-    separatorStrokeWidth: 1,
-    currentStepStrokeWidth: 2,
-    stepStrokeCurrentColor: "#02B2FE",
-    stepStrokeWidth: 1,
-    stepStrokeFinishedColor: "#02B2FE",
-    stepStrokeUnFinishedColor: "#02B2FE",
-    separatorFinishedColor: "#02B2FE",
-    separatorUnFinishedColor: "#02B2FE",
-    stepIndicatorFinishedColor: "#02B2FE",
-    stepIndicatorUnFinishedColor: "#ffffff",
-    stepIndicatorCurrentColor: "#ffffff",
-    stepIndicatorLabelFontSize: 13,
-    currentStepIndicatorLabelFontSize: 13,
-    stepIndicatorLabelCurrentColor: "#fe7013",
-    stepIndicatorLabelFinishedColor: "#ffffff",
-    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-    labelColor: "#999999",
-    labelSize: 13,
-    currentStepLabelColor: "#fe7013"
-  }
-};
+import StepIndicatorView from "../../components/stpeindicatorview";
+import { SignupUpdate } from "../../actions/Signupactions";
+import { connect } from "react-redux";
+import Regex from "../../utils/regex";
+//import NextButton from "../../compo/nents/nextbutton";
+import { Dropdown } from "react-native-material-dropdown";
 import NextButton from "../../components/nextbutton";
-export default class SignupFormtwo extends Component {
+import country from "../../utils/country";
+class SignupFormtwo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      contryerror: ""
+    };
+  }
   render() {
+    console.log(country, "kkk");
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      SignupUpdate
     } = this.props;
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -51,15 +41,17 @@ export default class SignupFormtwo extends Component {
             flex: 1,
             backgroundColor: "#fff",
             paddingHorizontal: scale(10),
-            paddingTop:verticalScale(18)
+            paddingTop: verticalScale(18)
           }}
         >
-          <StepIndicator
-            customStyles={styles.indicatorStyle}
-            currentPosition={1}
-            stepCount={4}
-          />
-          <View style={{ flex: 0.2, paddingHorizontal: scale(10),paddingTop:verticalScale(10) }}>
+          <StepIndicatorView position={1} />
+          <View
+            style={{
+              flex: 0.2,
+              paddingHorizontal: scale(10),
+              paddingTop: verticalScale(10)
+            }}
+          >
             <Text
               style={{
                 fontFamily: fonts.fontPrimaryLight,
@@ -74,21 +66,49 @@ export default class SignupFormtwo extends Component {
           </View>
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
             <TextField
-              ref={this.emailRef}
-              value={"Country"}
-              defaultValue={"India"}
-              keyboardType="email-address"
+              ref={this.cointryref}
+              value={this.props.country}
+              defaultValue={this.props.country}
+              keyboardType="default"
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
-              onChangeText={this.onChangeText}
+              onChangeText={data =>
+                SignupUpdate({ prop: "country", value: data })
+              }
               onSubmitEditing={this.onSubmitEmail}
               returnKeyType="next"
               label="Country"
+              disabled={false}
               error={""}
               tintColor={"#02B2FE"}
             />
+            <View style={{ flex: 1 }}>
+              <Dropdown
+                label={"Select Nationalty"}
+                data={country}
+                fontSize={15}
+                pickerStyle={{
+                  borderWidth: 1,
+                  borderColor: "#666666",
+                  borderRadius: 5
+                }}
+                value={this.props.nationality}
+                containerStyle={{
+                  color: "#666666"
+                }}
+                itemTextStyle={[
+                  {
+                    fontSize: 16,
+                    fontFamily: fonts.fontPrimaryLight
+                  }
+                ]}
+                onChangeText={data =>
+                  SignupUpdate({ prop: "nationality", value: data })
+                }
+              />
+            </View>
 
             <TextField
               ref={this.emailRef}
@@ -141,15 +161,17 @@ export default class SignupFormtwo extends Component {
             />
 
             <TextField
-              ref={this.emailRef}
-              value={"Postal code"}
-              defaultValue={"Street name"}
-              keyboardType="email-address"
+              ref={this.postalcode}
+              value={this.props.postalcode}
+              defaultValue={""}
+              keyboardType="numeric"
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
-              onChangeText={this.onChangeText}
+              onChangeText={data =>
+                SignupUpdate({ prop: "postalcode", value: data })
+              }
               onSubmitEditing={this.onSubmitEmail}
               returnKeyType="next"
               label="Postal code"
@@ -175,23 +197,21 @@ export default class SignupFormtwo extends Component {
             />
           </View>
         </KeyboardAwareScrollView>
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            right: 20,
-            bottom: 20,
-            width: 60,
-            height: 60,
-            backgroundColor: "#00B1FF",
-            borderRadius: 100,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-          onPress={() => navigate("Signupthree")}
-        >
-          <Icon name="md-arrow-forward" size={25} color={"#fff"} />
-        </TouchableOpacity>
+        <NextButton onPress={() => navigate("Signupthree")} />
       </View>
     );
   }
 }
+
+const mapStateToProps = ({ SignupReducer }) => {
+  const { country, nationality, postalcode } = SignupReducer;
+  return {
+    country,
+    nationality,
+    postalcode
+  };
+};
+export default connect(
+  mapStateToProps,
+  { SignupUpdate }
+)(SignupFormtwo);

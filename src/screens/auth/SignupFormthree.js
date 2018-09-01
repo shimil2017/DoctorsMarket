@@ -55,7 +55,7 @@ export default class SignupFormthree extends Component {
             flex: 1,
             backgroundColor: "#fff",
             paddingHorizontal: scale(10),
-            paddingTop:verticalScale(18)
+            paddingTop: verticalScale(18)
           }}
         >
           <StepIndicator
@@ -63,7 +63,13 @@ export default class SignupFormthree extends Component {
             currentPosition={2}
             stepCount={4}
           />
-          <View style={{ flex: 0.2, paddingHorizontal: scale(10) , paddingTop:verticalScale(18)}}>
+          <View
+            style={{
+              flex: 0.2,
+              paddingHorizontal: scale(10),
+              paddingTop: verticalScale(18)
+            }}
+          >
             <Text
               style={{
                 fontFamily: fonts.fontPrimaryLight,
@@ -166,22 +172,7 @@ export default class SignupFormthree extends Component {
             />
           </View>
         </KeyboardAwareScrollView>
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            right: 20,
-            bottom: 20,
-            width: 60,
-            height: 60,
-            backgroundColor: "#00B1FF",
-            borderRadius: 100,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-          onPress={() => navigate("Signupfour")}
-        >
-          <Icon name="md-arrow-forward" size={25} color={"#fff"} />
-        </TouchableOpacity>
+        <NextButton onPress={() => navigate("Signupfour")} />
       </View>
     );
   }

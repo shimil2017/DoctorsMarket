@@ -1,28 +1,53 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import { isIphoneX } from "react-native-iphone-x-helper";
-
+import LinearGradient from "react-native-linear-gradient";
+import {
+  colors,
+  normalize,
+  scale,
+  verticalScale,
+  moderateScale,
+  fonts
+} from "../config";
 export default class NextButton extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { onPress } = this.props;
     return (
-      <ActionButton
-        onPress={this.props.onPress}
-        buttonColor={"#00B1FF"}
-        offsetY={
-          isIphoneX() ? 95 - this.props.reducer : 70 - this.props.reducer
-        }
-        offsetX={18}
-        renderIcon={() => (
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: scale(30),
+          bottom: verticalScale(45),
+          width: 60,
+          height: 60,
+          backgroundColor: "#00B1FF",
+          borderRadius: 100
+        }}
+        onPress={onPress}
+      >
+        <LinearGradient
+          colors={["#00B1FF", "#7EF3C7"]}
+          style={styles.linearGradient}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 100
+          }}
+        >
           <Icon name="md-arrow-forward" size={25} color={"#fff"} />
-        )}
-      />
+        </LinearGradient>
+      </TouchableOpacity>
     );
   }
 }
