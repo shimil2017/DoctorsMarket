@@ -28,6 +28,8 @@
     "react-native-material-dropdown": "^0.11.1",
     "react-native-material-textfield": "^0.12.0",
     "react-native-modalbox": "^1.6.0",
+    "react-native-modest-checkbox": "^3.0.2",
+    "react-native-parallax-scroll-view": "^0.21.3",
     "react-native-permissions": "^1.1.1",
     "react-native-safari-view": "^2.1.0",
     "react-native-smart-splash-screen": "^2.3.5",

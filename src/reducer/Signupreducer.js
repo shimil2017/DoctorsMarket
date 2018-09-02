@@ -14,7 +14,11 @@ const INITIAL_STATE = {
   state: "",
   city: "",
   position: {},
-  telephone: ""
+  telephone: "",
+  specialist: "",
+  crbverified: "",
+  gmcnumber: "",
+  registerdata: []
 };
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {

@@ -125,7 +125,7 @@ const MyProfileStackNavigator = StackNavigator({
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      headerTitle: "Profile"
+      header: null
     }
   }
 });

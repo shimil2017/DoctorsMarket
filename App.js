@@ -77,7 +77,12 @@ export default class App extends Component<{}> {
           <Toast
             ref={ref => (this.toast = ref)}
             opacity={0.7}
-            style={{ backgroundColor: "#02B2FE" }}
+            textStyle={{ fontSize: 12 }}
+            style={{
+              backgroundColor: "#02B2FE",
+              borderRadius: 100,
+              bottom: 1
+            }}
           />
         </View>
       </Provider>
