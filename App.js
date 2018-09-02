@@ -20,6 +20,7 @@ import { Locumapp } from "./src/routes";
 import Toast, { DURATION } from "react-native-easy-toast";
 import configureStore from "./src/store/configureStore";
 import { Provider } from "react-redux";
+import Spinner from "./src/components/spinner";
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -54,13 +55,15 @@ export default class App extends Component<{}> {
       return (
         <View
           style={{
-            backgroundColor: "red",
             flex: 1,
-            justifyContent: "center",
-            alignItems: "center"
+            backgroundColor: "transparent",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
-          <ActivityIndicator />
+          <ActivityIndicator color={"#02B2FE"} size={"large"} />
+
+          <Text style={{ color: "#02B2FE" }}>Starting Doctors App..</Text>
         </View>
       );
     }
