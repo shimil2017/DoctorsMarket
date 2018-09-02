@@ -17,37 +17,19 @@ import NextButton from "../../components/nextbutton";
 import ActionButton from "react-native-action-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import Icon from "react-native-vector-icons/Ionicons";
-let styles = {
-  indicatorStyle: {
-    stepIndicatorSize: 15,
-    currentStepIndicatorSize: 20,
-    separatorStrokeWidth: 1,
-    currentStepStrokeWidth: 2,
-    stepStrokeCurrentColor: "#02B2FE",
-    stepStrokeWidth: 1,
-    stepStrokeFinishedColor: "#02B2FE",
-    stepStrokeUnFinishedColor: "#02B2FE",
-    separatorFinishedColor: "#02B2FE",
-    separatorUnFinishedColor: "#02B2FE",
-    stepIndicatorFinishedColor: "#02B2FE",
-    stepIndicatorUnFinishedColor: "#ffffff",
-    stepIndicatorCurrentColor: "#ffffff",
-    stepIndicatorLabelFontSize: 13,
-    currentStepIndicatorLabelFontSize: 13,
-    stepIndicatorLabelCurrentColor: "#fe7013",
-    stepIndicatorLabelFinishedColor: "#ffffff",
-    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-    labelColor: "#999999",
-    labelSize: 13,
-    currentStepLabelColor: "#fe7013"
-  }
-};
-
-export default class SignupFormthree extends Component {
+import StepIndicatorView from "../../components/stpeindicatorview";
+import doctorslist from "../../utils/doctorsspecialist";
+import { Dropdown } from "react-native-material-dropdown";
+import { connect } from "react-redux";
+import Regex from "../../utils/regex";
+import { SignupUpdate } from "../../actions/Signupactions";
+class SignupFormthree extends Component {
   render() {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      SignupUpdate
     } = this.props;
+    // alert(this.props.crbverified);
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <KeyboardAwareScrollView
@@ -58,11 +40,7 @@ export default class SignupFormthree extends Component {
             paddingTop: verticalScale(18)
           }}
         >
-          <StepIndicator
-            customStyles={styles.indicatorStyle}
-            currentPosition={2}
-            stepCount={4}
-          />
+          <StepIndicatorView position={2} />
           <View
             style={{
               flex: 0.2,
@@ -83,37 +61,26 @@ export default class SignupFormthree extends Component {
             </Text>
           </View>
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
-            <TextField
-              ref={this.emailRef}
-              value={"Firstname"}
-              defaultValue={"Firstname"}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              onFocus={this.onFocus}
-              onChangeText={this.onChangeText}
-              onSubmitEditing={this.onSubmitEmail}
-              returnKeyType="next"
-              label="First name"
+            <Dropdown
               error={""}
-              tintColor={"#02B2FE"}
-            />
-            <TextField
-              ref={this.emailRef}
-              value={"Firstname"}
-              defaultValue={"Firstname"}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              onFocus={this.onFocus}
-              onChangeText={this.onChangeText}
-              onSubmitEditing={this.onSubmitEmail}
-              returnKeyType="next"
-              label="What is your speciality?"
-              error={""}
-              tintColor={"#02B2FE"}
+              label={"what is you speciality?"}
+              data={doctorslist}
+              fontSize={15}
+              pickerStyle={{
+                borderWidth: 1,
+                borderColor: "#666666",
+                borderRadius: 5
+              }}
+              value={this.props.specialist}
+              itemTextStyle={[
+                {
+                  fontSize: 16,
+                  fontFamily: fonts.fontPrimaryLight
+                }
+              ]}
+              onChangeText={data =>
+                SignupUpdate({ prop: "specialist", value: data })
+              }
             />
             <TextField
               ref={this.emailRef}
@@ -140,7 +107,7 @@ export default class SignupFormthree extends Component {
                 marginTop: verticalScale(10)
               }}
             >
-              <Text style={{ opacity: 0.7 }}>Enter your GMC number</Text>
+              <Text style={{ opacity: 0.7 }}>Are you CRB verified?</Text>
 
               <View
                 style={{
@@ -150,20 +117,34 @@ export default class SignupFormthree extends Component {
                   marginTop: verticalScale(10)
                 }}
               >
-                <Genderfield label="Yes" />
-                <Genderfield label="No" />
+                <Genderfield
+                  selected={this.props.crbverified === true}
+                  onPress={() =>
+                    SignupUpdate({ prop: "crbverified", value: true })
+                  }
+                  label="Yes"
+                />
+                <Genderfield
+                  selected={this.props.crbverified === false}
+                  onPress={() =>
+                    SignupUpdate({ prop: "crbverified", value: false })
+                  }
+                  label="No"
+                />
               </View>
             </View>
             <TextField
-              ref={this.emailRef}
-              value={"Firstname"}
-              defaultValue={"Firstname"}
-              keyboardType="email-address"
+              ref="gmcnumber"
+              value={this.props.gmcnumber}
+              defaultValue={""}
+              keyboardType="default"
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
-              onChangeText={this.onChangeText}
+              onChangeText={text =>
+                SignupUpdate({ prop: "gmcnumber", value: text })
+              }
               onSubmitEditing={this.onSubmitEmail}
               returnKeyType="next"
               label="Enter your GMC number"
@@ -177,3 +158,11 @@ export default class SignupFormthree extends Component {
     );
   }
 }
+const mapStateToProps = ({ SignupReducer }) => {
+  const { specialist, crbverified, gmcnumber } = SignupReducer;
+  return { specialist, crbverified, gmcnumber };
+};
+export default connect(
+  mapStateToProps,
+  { SignupUpdate }
+)(SignupFormthree);
