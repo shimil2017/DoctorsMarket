@@ -35,9 +35,10 @@ class LoginScreen extends Component {
       emailerror: "",
       passworderror: ""
     };
+    this.renderPasswordAccessory = this.renderPasswordAccessory.bind(this);
   }
 
-  renderPasswordAccessory = () => {
+  renderPasswordAccessory() {
     let { secureTextEntry } = this.state;
 
     let name = secureTextEntry ? "visibility" : "visibility-off";
@@ -47,13 +48,11 @@ class LoginScreen extends Component {
         size={24}
         name={name}
         color={TextField.defaultProps.baseColor}
-        onPress={() =>
-          this.setState({ secureTextEntry: !this.state.secureTextEntry })
-        }
+        onPress={this.renderPasswordAccessory}
         suppressHighlighting
       />
     );
-  };
+  }
   onSubmit = () => {
     const {
       navigation: { navigate },
@@ -143,8 +142,6 @@ class LoginScreen extends Component {
             title=""
             maxLength={30}
             tintColor={"#02B2FE"}
-            characterRestriction={20}
-            renderAccessory={this.renderPasswordAccessory}
           />
         </View>
         <View
