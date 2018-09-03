@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, Keyboard } from "react-native";
 import {
   colors,
   normalize,
@@ -38,6 +38,7 @@ class SignupFormone extends Component {
 
   onFocus = () => {};
   nextPage = () => {
+    Keyboard.dismiss();
     this.setState({
       firstnameerror: "",
       secondnameerror: "",
@@ -234,7 +235,7 @@ class SignupFormone extends Component {
                 "phonenumber"
               )}
               returnKeyType="next"
-              label="email adress"
+              label="Email adress"
               error={this.state.emailerror}
               tintColor={"#02B2FE"}
             />
@@ -250,7 +251,9 @@ class SignupFormone extends Component {
               onChangeText={text =>
                 SignupUpdate({ prop: "phonenumber", value: text })
               }
-              onSubmitEditing={() => this.refs["phonenumber"].blur()}
+              onSubmitEditing={() => {
+                Keyboard.dismiss(), this.refs["phonenumber"].blur();
+              }}
               returnKeyType="next"
               label="Phone number"
               error={this.state.phonenumbererror}
@@ -322,7 +325,7 @@ class SignupFormone extends Component {
               }
               onSubmitEditing={() => this.refs["cpassword"].focus()}
               returnKeyType="next"
-              label="password"
+              label="Password"
               error={this.state.passworderror}
               tintColor={"#02B2FE"}
             />
@@ -338,7 +341,7 @@ class SignupFormone extends Component {
               onFocus={this.onFocus}
               onChangeText={text => this.setState({ confirmpassword: text })}
               returnKeyType="next"
-              label="confirm password"
+              label="Confirm password"
               error={this.state.matcherror}
               tintColor={"#02B2FE"}
               secureTextEntry={true}

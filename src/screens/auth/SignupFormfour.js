@@ -22,15 +22,27 @@ import Button from "../../components/button";
 import Icon from "react-native-vector-icons/FontAwesome";
 const { height, width } = Dimensions.get("window");
 import CheckBox from "react-native-modest-checkbox";
-export default class SignupupFormfour extends Component {
-  state = { isChecked: false };
+import { connect } from "react-redux";
+import { registraion } from "../../actions/Signupactions";
+import Spinner from "../../components/spinner";
+class SignupupFormfour extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChecked: false,
+      visible: false
+    };
+  }
+
   handlePressCheckedBox = checked => {
     this.setState({
       isChecked: checked
     });
   };
   register = () => {
+    this.setState({ visible: true });
     const {
+      SignupReducer,
       navigation: { navigate }
     } = this.props;
     if (!this.state.isChecked) {
@@ -40,7 +52,35 @@ export default class SignupupFormfour extends Component {
       );
       return;
     }
-    navigate("Main");
+
+    let body = {
+      fname: SignupReducer.firstname,
+      lname: SignupReducer.lastname,
+      email: SignupReducer.email,
+      password: SignupReducer.password,
+      phone_number: SignupReducer.phonenumber,
+      genders_id: SignupReducer.gender == "male" ? 1 : 2,
+      nationalities_id: SignupReducer.nationality.id,
+      street: SignupReducer.streetname,
+      town: SignupReducer.city,
+      country: SignupReducer.country,
+      postcode: SignupReducer.postalcode,
+      home_tel_no: SignupReducer.telephone,
+      locum_specialties_id: SignupReducer.specialist.id,
+      acnt_status: SignupReducer.crbverified == true ? 1 : 0,
+      gmc_number: SignupReducer.gmcnumber,
+      avail_types_id: "",
+      device_token: ""
+    };
+    console.log(body, "body");
+
+    setTimeout(() => {
+      this.setState({ visible: false });
+    }, 3000);
+
+    //console.log(body, "signup reducr");
+    //navigate("Main");
+    // this.props.registraion(body);
   };
   render() {
     return (
@@ -57,17 +97,15 @@ export default class SignupupFormfour extends Component {
           style={{
             flex: 0.1,
             paddingHorizontal: scale(10),
-            paddingTop: verticalScale(18),
-           
+            paddingTop: verticalScale(18)
           }}
         >
           <Text
             style={{
               fontFamily: fonts.fontPrimaryLight,
-              fontSize: normalize(36),          
+              fontSize: normalize(36),
               color: "#000000",
-              opacity: 0.8,
-              
+              opacity: 0.8
             }}
           >
             Terms of Services
@@ -76,7 +114,7 @@ export default class SignupupFormfour extends Component {
         <View
           style={{
             flex: 0.9,
-            marginTop:verticalScale(15),
+            marginTop: verticalScale(15),
             marginBottom: verticalScale(10)
           }}
         >
@@ -84,7 +122,7 @@ export default class SignupupFormfour extends Component {
             style={{
               flex: 0.5,
               paddingTop: verticalScale(15),
-              marginLeft: scale(2),
+              marginLeft: scale(2)
             }}
           >
             <Text
@@ -172,7 +210,21 @@ export default class SignupupFormfour extends Component {
             />
           </View>
         </View>
+        {this.state.visible && (
+          <Spinner visible={this.state.visible} text={"Signing...."} />
+        )}
       </View>
     );
   }
 }
+
+const mapStateToProps = ({ SignupReducer }) => {
+  return {
+    SignupReducer
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { registraion }
+)(SignupupFormfour);

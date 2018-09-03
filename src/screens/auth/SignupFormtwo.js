@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   DeviceEventEmitter,
-  Alert
+  Alert,
+  Keyboard
 } from "react-native";
 import OpenAppSettings from "react-native-app-settings";
 import {
@@ -50,7 +51,7 @@ class SignupFormtwo extends Component {
   }
 
   async componentWillMount() {
-    let context=this;
+    let context = this;
     if (!this.props.country && !this.state.state) {
       this.setState({ visible: true });
       locationfetching()
@@ -59,18 +60,19 @@ class SignupFormtwo extends Component {
           this.setState({ visible: false });
         })
         .catch(error => {
-        //  alert("error")
-         // console.log(error);
-         context.setState({ visible: false });
+          //  alert("error")
+          // console.log(error);
+          context.setState({ visible: false });
           DeviceEventEmitter.emit(
             "showToast",
             "Unable to fetch location details"
-          );     
+          );
         });
     }
   }
 
   submit = () => {
+    Keyboard.dismiss();
     this.setState({
       countryerror: "",
       nationalerror: "",
@@ -128,16 +130,9 @@ class SignupFormtwo extends Component {
       return;
     }
 
-    if (nationality.length === 0) {
+    if (!nationality.value && !nationality.id) {
       this.setState({
         nationalerror: "Please select nationality"
-      });
-      return;
-    }
-
-    if (nationality.length > 2 && !Regex.validateString(nationality)) {
-      this.setState({
-        nationalerror: "Nationality name contain illegal charecter"
       });
       return;
     }
@@ -148,8 +143,8 @@ class SignupFormtwo extends Component {
       });
       return;
     }
-    
-    if (!city && city.length >2 || /^\s*$/.test(city)) {
+
+    if ((!city && city.length > 2) || /^\s*$/.test(city)) {
       this.setState({
         cityerror: "City name contains illegal charecter"
       });
@@ -163,7 +158,7 @@ class SignupFormtwo extends Component {
       return;
     }
 
-    if (!streetname && streetname.length >2 || /^\s*$/.test(streetname)) {
+    if ((!streetname && streetname.length > 2) || /^\s*$/.test(streetname)) {
       this.setState({
         streeterror: "Street name contains illegal charecter"
       });
@@ -265,18 +260,20 @@ class SignupFormtwo extends Component {
                   borderColor: "#666666",
                   borderRadius: 5
                 }}
-                value={this.props.nationality}
+                value={this.props.nationality.value}
                 itemTextStyle={[
                   {
                     fontSize: 16,
                     fontFamily: fonts.fontPrimaryLight
                   }
                 ]}
-                onChangeText={data =>{
-                  console.log(data,"data");
-                  SignupUpdate({ prop: "nationality", value: data })
-                }
-                }
+                onChangeText={(value, index) => {
+                  // console.log(value, country[index].id, "data");
+                  SignupUpdate({
+                    prop: "nationality",
+                    value: { value, id: country[index].id }
+                  });
+                }}
               />
             </View>
 
@@ -379,33 +376,35 @@ class SignupFormtwo extends Component {
             />
             <View style={{ width, height: 40 }} />
           </View>
-        { this.state.visible&& <Modal
-            backdrop={false}
-            isOpen={this.state.visible}           
-            onClosed={() => this.setState({ visible: false })}
-            style={{
-              flex: 1,
-              backgroundColor: "transparent",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-            position={"center"}
-          >
-            <View
+          {this.state.visible && (
+            <Modal
+              backdrop={false}
+              isOpen={this.state.visible}
+              onClosed={() => this.setState({ visible: false })}
               style={{
                 flex: 1,
                 backgroundColor: "transparent",
                 alignItems: "center",
                 justifyContent: "center"
               }}
+              position={"center"}
             >
-              <ActivityIndicator color={"#02B2FE"} size={"large"} />
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: "transparent",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <ActivityIndicator color={"#02B2FE"} size={"large"} />
 
-              <Text style={{ color: "#02B2FE" }}>
-                Fecthing location details...
-              </Text>
-            </View>
-          </Modal>}
+                <Text style={{ color: "#02B2FE" }}>
+                  Fecthing location details...
+                </Text>
+              </View>
+            </Modal>
+          )}
         </KeyboardAwareScrollView>
         <NextButton onPress={this.submit} />
       </View>

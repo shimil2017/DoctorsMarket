@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions,Keyboard,DeviceEventEmitter,ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  Keyboard,
+  DeviceEventEmitter,
+  ActivityIndicator
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   colors,
@@ -14,35 +21,39 @@ import Button from "../../components/button";
 const { height, width } = Dimensions.get("window");
 import Regex from "../../utils/regex";
 import Spinner from "../../components/spinner";
-import RestClient from  "../../utils/restclient"
+import RestClient from "../../utils/restclient";
 import Modal from "react-native-modalbox";
 export default class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      emailerror:"",
-      loader:false
+      emailerror: "",
+      loader: false
     };
   }
- 
-  async onSubmit(){
-    const {email}=this.state;
-    await this.setState({emailerror:""})  
+
+  async onSubmit() {
+    const { email } = this.state;
+    await this.setState({ emailerror: "" });
     if (!Regex.validateEmail(email)) {
       this.setState({
         emailerror: "Please enter valid email adress"
       });
       return;
-   } 
-   await this.setState({loader:true})  
-     
-       RestClient.post("/locum-admin/apis/forgotPassword",{},{"email":this.state.email})
-       .then((response)=>{         
-         this.setState({loader:false}) 
-        DeviceEventEmitter.emit(response.message);
-      })   
-   }
+    }
+    this.setState({ loader: true });
+
+    RestClient.post(
+      "/locum-admin/apis/forgotPassword",
+      {},
+      { email: this.state.email }
+    ).then(response => {
+      console.log(response, "resposne");
+      this.setState({ loader: false });
+      DeviceEventEmitter.emit(response.message);
+    });
+  }
 
   render() {
     return (
@@ -98,8 +109,8 @@ export default class ForgotPassword extends Component {
             autoCorrect={false}
             enablesReturnKeyAutomatically={true}
             onFocus={this.onFocus}
-            onChangeText={(text)=>this.setState({email:text})}
-            onSubmitEditing={()=>Keyboard.dismiss()}
+            onChangeText={text => this.setState({ email: text })}
+            onSubmitEditing={() => Keyboard.dismiss()}
             returnKeyType="next"
             label="Email Address"
             error={this.state.emailerror}
@@ -134,9 +145,10 @@ export default class ForgotPassword extends Component {
             }}
           />
         </View>
-        {this.state.loader&& <Modal
+        {this.state.loader && (
+          <Modal
             backdrop={false}
-            isOpen={this.state.loader}           
+            isOpen={this.state.loader}
             onClosed={() => this.setState({ loader: false })}
             style={{
               flex: 1,
@@ -156,11 +168,10 @@ export default class ForgotPassword extends Component {
             >
               <ActivityIndicator color={"#02B2FE"} size={"large"} />
 
-              <Text style={{ color: "#02B2FE" }}>
-                sending email....
-              </Text>
+              <Text style={{ color: "#02B2FE" }}>sending email....</Text>
             </View>
-          </Modal>}
+          </Modal>
+        )}
       </KeyboardAwareScrollView>
     );
   }

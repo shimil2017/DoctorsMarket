@@ -55,7 +55,7 @@ const styles = {
   }
 };
 
- class AuthScreen extends Component {
+class AuthScreen extends Component {
   constructor(props) {
     super(props);
     console.log(normalize, "normalize");
@@ -69,7 +69,7 @@ const styles = {
     navigate("Login");
   };
   registerUser = () => {
-    this.props.intialState()
+    this.props.intialState();
     const {
       navigation: { navigate }
     } = this.props;
@@ -205,4 +205,7 @@ const styles = {
     );
   }
 }
-export default connect(null,{intialState})(AuthScreen)
+export default connect(
+  null,
+  { intialState }
+)(AuthScreen);

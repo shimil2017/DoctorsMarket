@@ -14,7 +14,7 @@ import Regex from "../../utils/regex";
 import NextButton from "../../components/nextbutton";
 import Entypo from "react-native-vector-icons/Entypo";
 import Button from "../../components/button";
-import { LoginUpdate } from "../../actions/Loginactions";
+import { LoginUpdate, LoginChecking } from "../../actions/Loginactions";
 import Spinner from "../../components/spinner";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -28,17 +28,16 @@ import {
 import { connect } from "react-redux";
 
 class LoginScreen extends Component {
-constructor(props){
-  super(props)
-  this.state = {       
-    secureTextEntry: true,
-    emailerror:"",
-    passworderror:""
+  constructor(props) {
+    super(props);
+    this.state = {
+      secureTextEntry: true,
+      emailerror: "",
+      passworderror: ""
+    };
   }
-}
 
-
-  renderPasswordAccessory=()=> {
+  renderPasswordAccessory = () => {
     let { secureTextEntry } = this.state;
 
     let name = secureTextEntry ? "visibility" : "visibility-off";
@@ -48,14 +47,26 @@ constructor(props){
         size={24}
         name={name}
         color={TextField.defaultProps.baseColor}
-        onPress={()=>this.setState({secureTextEntry:!this.state.secureTextEntry})}
+        onPress={() =>
+          this.setState({ secureTextEntry: !this.state.secureTextEntry })
+        }
         suppressHighlighting
       />
     );
-  }
-  onSubmit=()=>{
-    console.log(this.props.email,this.props.password,"passs")
-  }
+  };
+  onSubmit = () => {
+    const {
+      navigation: { navigate },
+      email,
+      password
+    } = this.props;
+    console.log(this.props.email, this.props.password, "passs");
+    let body = {
+      email,
+      password
+    };
+    this.props.LoginChecking({ email, password, navigate: navigate });
+  };
 
   render() {
     let { secureTextEntry } = this.state;
@@ -64,7 +75,7 @@ constructor(props){
       navigation: { navigate }
     } = this.props;
 
-    let defaultEmail = "test@gmail.com".replace(/\s+/g, "_").toLowerCase();
+    //let defaultEmail = "test@gmail.com".replace(/\s+/g, "_").toLowerCase();
 
     return (
       <KeyboardAwareScrollView
@@ -98,16 +109,14 @@ constructor(props){
           <TextField
             ref="email"
             value={this.props.email}
-            defaultValue={defaultEmail}
+            defaultValue={""}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
             autoFocus={true}
             enablesReturnKeyAutomatically={true}
             onFocus={this.onFocus}
-            onChangeText={data =>
-              LoginUpdate({ prop: "email", value: data })
-            }
+            onChangeText={data => LoginUpdate({ prop: "email", value: data })}
             onSubmitEditing={() => this.refs["password"].focus()}
             returnKeyType="next"
             label="Email Address"
@@ -131,7 +140,7 @@ constructor(props){
             returnKeyType="done"
             label="Password"
             error={this.state.passworderror}
-            title="Choose wisely"
+            title=""
             maxLength={30}
             tintColor={"#02B2FE"}
             characterRestriction={20}
@@ -142,8 +151,7 @@ constructor(props){
           style={{
             width,
             height: verticalScale(25),
-            alignItems: "flex-end",
-     
+            alignItems: "flex-end"
           }}
         >
           <Text
@@ -154,7 +162,7 @@ constructor(props){
               paddingRight: scale(32),
               letterSpacing: 2,
               color: "#02B2FE",
-              paddingBottom:verticalScale(8)
+              paddingBottom: verticalScale(8)
             }}
           >
             Forgot?
@@ -194,21 +202,22 @@ constructor(props){
             }}
           />
         </View>
-        {this.props.loader&& <Spinner visible={this.props.loader} text={"sending...."}/>}
+        {this.props.loader && (
+          <Spinner visible={this.props.loader} text={"Loging...."} />
+        )}
       </KeyboardAwareScrollView>
     );
   }
 }
 const mapStateToProps = ({ Loginreducer }) => {
-  const { email,password ,loader} = Loginreducer;
- return{
-  email,
-  password,
-  loader
- }
+  const { email, password, loader } = Loginreducer;
+  return {
+    email,
+    password,
+    loader
+  };
 };
 export default connect(
   mapStateToProps,
-  { LoginUpdate }
+  { LoginUpdate, LoginChecking }
 )(LoginScreen);
-

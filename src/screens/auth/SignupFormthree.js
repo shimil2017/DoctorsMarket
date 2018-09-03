@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  Keyboard
+} from "react-native";
 import {
   colors,
   normalize,
@@ -24,54 +30,53 @@ import { connect } from "react-redux";
 import Regex from "../../utils/regex";
 import { SignupUpdate } from "../../actions/Signupactions";
 class SignupFormthree extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      specialityerror:"",
-      crberror:"",
-      gmcerror:""
-    }
+    this.state = {
+      specialityerror: "",
+      crberror: "",
+      gmcerror: ""
+    };
   }
-  onSubmit=()=>{
+  onSubmit = () => {
+    Keyboard.dismiss();
     this.setState({
-      specialityerror:"",
-      crberror:"",
-      gmcerror:""
+      specialityerror: "",
+      crberror: "",
+      gmcerror: ""
     });
-  //alert(this.props.crbverified)
+    //alert(this.props.crbverified)
     const {
-      specialist, crbverified, gmcnumber,
+      specialist,
+      crbverified,
+      gmcnumber,
       navigation: { navigate }
     } = this.props;
-    const {
-      specialityerror,
-      crberror,
-      gmcerror
-    } = this.state;
-    if (specialist.length === 0) {
+    const { specialityerror, crberror, gmcerror } = this.state;
+    if (!specialist.value && !specialist.id) {
       this.setState({
-        specialityerror: "Please select your specialty?"
+        specialityerror: "Please select your speciality?"
       });
       return;
     }
 
-    if(!crbverified){
+    if (!crbverified) {
       this.setState({
         crberror: "Have you verifeid CRB?"
       });
       return;
     }
-    if(crbverified&&gmcnumber.length===0){
+    if (crbverified && gmcnumber.length === 0) {
       this.setState({
         gmcerror: "Please enter GMC number"
       });
       return;
     }
 
-    navigate("Signupfour");
+    //  console.log(this.props.SignupReducer, "SignupReducer");
 
-   
-  }
+    navigate("Signupfour");
+  };
   render() {
     const {
       navigation: { navigate },
@@ -93,8 +98,7 @@ class SignupFormthree extends Component {
             style={{
               flex: 0.2,
               paddingHorizontal: scale(10),
-              paddingTop: verticalScale(18),
-              
+              paddingTop: verticalScale(18)
             }}
           >
             <Text
@@ -112,7 +116,7 @@ class SignupFormthree extends Component {
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
             <Dropdown
               error={this.state.specialityerror}
-              label={"what is you speciality?"}
+              label={"What is you speciality?"}
               data={doctorslist}
               fontSize={15}
               pickerStyle={{
@@ -120,18 +124,21 @@ class SignupFormthree extends Component {
                 borderColor: "#666666",
                 borderRadius: 5
               }}
-              value={this.props.specialist}
+              value={this.props.specialist.value}
               itemTextStyle={[
                 {
                   fontSize: 16,
                   fontFamily: fonts.fontPrimaryLight
                 }
               ]}
-              onChangeText={data =>
-                SignupUpdate({ prop: "specialist", value: data })
+              onChangeText={(value, index) =>
+                SignupUpdate({
+                  prop: "specialist",
+                  value: { value: value, id: doctorslist[index].id }
+                })
               }
             />
-            
+
             <View
               style={{
                 height: verticalScale(70),
@@ -176,7 +183,7 @@ class SignupFormthree extends Component {
                 {this.state.crberror}
               </Text>
             </View>
-        <TextField
+            <TextField
               ref="gmcnumber"
               value={this.props.gmcnumber}
               defaultValue={""}
@@ -188,7 +195,7 @@ class SignupFormthree extends Component {
               onChangeText={text =>
                 SignupUpdate({ prop: "gmcnumber", value: text })
               }
-              onSubmitEditing={this.onSubmitEmail}
+              onSubmitEditing={() => Keyboard.dismiss()}
               returnKeyType="next"
               label="Enter your GMC number"
               error={this.state.gmcerror}
@@ -203,7 +210,7 @@ class SignupFormthree extends Component {
 }
 const mapStateToProps = ({ SignupReducer }) => {
   const { specialist, crbverified, gmcnumber } = SignupReducer;
-  return { specialist, crbverified, gmcnumber };
+  return { specialist, crbverified, gmcnumber, SignupReducer };
 };
 export default connect(
   mapStateToProps,

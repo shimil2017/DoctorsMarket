@@ -1,4 +1,8 @@
-import { SIGNUP_UPDATE, LOCATION_DETAIL,RESET } from "../actions/Signupactions";
+import {
+  SIGNUP_UPDATE,
+  LOCATION_DETAIL,
+  RESET
+} from "../actions/Signupactions";
 
 const INITIAL_STATE = {
   firstname: "",
@@ -8,14 +12,14 @@ const INITIAL_STATE = {
   gender: "",
   password: "",
   country: "",
-  nationality: "",
+  nationality: {},
   postalcode: "",
   streetname: "",
   state: "",
   city: "",
   position: {},
   telephone: "",
-  specialist: "",
+  specialist: {},
   crbverified: "",
   gmcnumber: "",
   registerdata: []
@@ -40,8 +44,8 @@ export default (state = INITIAL_STATE, action) => {
         city:
           action.payload.subAdminArea != null ? action.payload.subAdminArea : ""
       };
-     case  RESET:
-      return INITIAL_STATE; 
+    case RESET:
+      return INITIAL_STATE;
     default:
       return state;
   }
