@@ -14,6 +14,8 @@ import Regex from "../../utils/regex";
 import NextButton from "../../components/nextbutton";
 import Entypo from "react-native-vector-icons/Entypo";
 import Button from "../../components/button";
+import { LoginUpdate } from "../../actions/Loginactions";
+import Spinner from "../../components/spinner";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   colors,
@@ -23,150 +25,20 @@ import {
   moderateScale,
   fonts
 } from "../../config";
-let styles = {
-  scroll: {
-    backgroundColor: "#fff",
-    flex: 1
-  },
-
-  container: {
-    margin: 8,
-    marginTop: 24
-  },
-
-  contentContainer: {
-    padding: 8
-  },
-  indicatorStyle: {
-    stepIndicatorSize: 30,
-    currentStepIndicatorSize: 40,
-    separatorStrokeWidth: 2,
-    currentStepStrokeWidth: 3,
-    stepStrokeCurrentColor: "#fe7013",
-    stepStrokeWidth: 3,
-    stepStrokeFinishedColor: "#fe7013",
-    stepStrokeUnFinishedColor: "#aaaaaa",
-    separatorFinishedColor: "#fe7013",
-    separatorUnFinishedColor: "#aaaaaa",
-    stepIndicatorFinishedColor: "#fe7013",
-    stepIndicatorUnFinishedColor: "#ffffff",
-    stepIndicatorCurrentColor: "#ffffff",
-    stepIndicatorLabelFontSize: 13,
-    currentStepIndicatorLabelFontSize: 13,
-    stepIndicatorLabelCurrentColor: "#fe7013",
-    stepIndicatorLabelFinishedColor: "#ffffff",
-    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-    labelColor: "#999999",
-    labelSize: 13,
-    currentStepLabelColor: "#fe7013"
-  }
-};
+import { connect } from "react-redux";
 
 class LoginScreen extends Component {
-  constructor(props) {
-    super(props);
-    console.log(Regex, "regetx");
-    this.onFocus = this.onFocus.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChangeText = this.onChangeText.bind(this);
-    this.onSubmitFirstName = this.onSubmitFirstName.bind(this);
-    this.onSubmitLastName = this.onSubmitLastName.bind(this);
-    this.onSubmitAbout = this.onSubmitAbout.bind(this);
-    this.onSubmitEmail = this.onSubmitEmail.bind(this);
-    this.onSubmitPassword = this.onSubmitPassword.bind(this);
-    this.onAccessoryPress = this.onAccessoryPress.bind(this);
-
-    this.firstnameRef = this.updateRef.bind(this, "firstname");
-    this.lastnameRef = this.updateRef.bind(this, "lastname");
-    this.aboutRef = this.updateRef.bind(this, "about");
-    this.emailRef = this.updateRef.bind(this, "email");
-    this.passwordRef = this.updateRef.bind(this, "password");
-
-    this.renderPasswordAccessory = this.renderPasswordAccessory.bind(this);
-
-    this.state = {
-      firstname: "",
-      lastname: "",
-      about: "",
-      secureTextEntry: true
-    };
+constructor(props){
+  super(props)
+  this.state = {       
+    secureTextEntry: true,
+    emailerror:"",
+    passworderror:""
   }
+}
 
-  onFocus() {
-    let { errors = {} } = this.state;
 
-    for (let name in errors) {
-      let ref = this[name];
-
-      if (ref && ref.isFocused()) {
-        delete errors[name];
-      }
-    }
-
-    this.setState({ errors });
-  }
-
-  onChangeText(text) {
-    ["email", "password"]
-      .map(name => ({ name, ref: this[name] }))
-      .forEach(({ name, ref }) => {
-        if (ref.isFocused()) {
-          this.setState({ [name]: text });
-        }
-      });
-  }
-
-  onAccessoryPress = () => {
-    this.setState(({ secureTextEntry }) => ({
-      secureTextEntry: !secureTextEntry
-    }));
-  };
-
-  onSubmitFirstName() {
-    this.lastname.focus();
-  }
-
-  onSubmitLastName() {
-    this.about.focus();
-  }
-
-  onSubmitAbout() {
-    this.email.focus();
-  }
-
-  onSubmitEmail() {
-    this.password.focus();
-  }
-
-  onSubmitPassword() {
-    this.password.blur();
-  }
-
-  onSubmit() {
-    let errors = {};
-
-    ["email", "password"].forEach(name => {
-      let value = this[name].value();
-
-      if (!value) {
-        errors[name] = "Should not be empty";
-      } else {
-        if ("password" === name && value.length < 6) {
-          errors[name] = "Too short";
-        } else if ("email" === name && !Regex.validateEmail(email.trim())) {
-          errors[name] = "email is not valid";
-        }
-      }
-    });
-
-    this.setState({ errors });
-  }
-
-  updateRef(name, ref) {
-    this[name] = ref;
-  }
-
-  renderPasswordAccessory() {
+  renderPasswordAccessory=()=> {
     let { secureTextEntry } = this.state;
 
     let name = secureTextEntry ? "visibility" : "visibility-off";
@@ -176,15 +48,18 @@ class LoginScreen extends Component {
         size={24}
         name={name}
         color={TextField.defaultProps.baseColor}
-        onPress={this.onAccessoryPress}
+        onPress={()=>this.setState({secureTextEntry:!this.state.secureTextEntry})}
         suppressHighlighting
       />
     );
   }
+  onSubmit=()=>{
+    console.log(this.props.email,this.props.password,"passs")
+  }
 
   render() {
-    let { errors = {}, secureTextEntry, ...data } = this.state;
-    ///let { firstname = "name", lastname = "house" } = data;
+    let { secureTextEntry } = this.state;
+
     const {
       navigation: { navigate }
     } = this.props;
@@ -221,36 +96,41 @@ class LoginScreen extends Component {
           }}
         >
           <TextField
-            ref={this.emailRef}
-            value={data.email}
+            ref="email"
+            value={this.props.email}
             defaultValue={defaultEmail}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
+            autoFocus={true}
             enablesReturnKeyAutomatically={true}
             onFocus={this.onFocus}
-            onChangeText={this.onChangeText}
-            onSubmitEditing={this.onSubmitEmail}
+            onChangeText={data =>
+              LoginUpdate({ prop: "email", value: data })
+            }
+            onSubmitEditing={() => this.refs["password"].focus()}
             returnKeyType="next"
             label="Email Address"
-            error={errors.email}
+            error={this.state.emailerror}
             tintColor={"#02B2FE"}
           />
 
           <TextField
-            ref={this.passwordRef}
-            value={data.password}
-            secureTextEntry={secureTextEntry}
+            ref="password"
+            value={this.props.password}
+            secureTextEntry={this.state.secureTextEntry}
             autoCapitalize="none"
             autoCorrect={false}
             enablesReturnKeyAutomatically={true}
             clearTextOnFocus={true}
             onFocus={this.onFocus}
-            onChangeText={this.onChangeText}
+            onChangeText={data =>
+              LoginUpdate({ prop: "password", value: data })
+            }
             onSubmitEditing={this.onSubmitPassword}
             returnKeyType="done"
             label="Password"
-            error={errors.password}
+            error={this.state.passworderror}
             title="Choose wisely"
             maxLength={30}
             tintColor={"#02B2FE"}
@@ -261,8 +141,9 @@ class LoginScreen extends Component {
         <View
           style={{
             width,
-            height: 15,
-            alignItems: "flex-end"
+            height: verticalScale(25),
+            alignItems: "flex-end",
+     
           }}
         >
           <Text
@@ -272,7 +153,8 @@ class LoginScreen extends Component {
               fontSize: normalize(13),
               paddingRight: scale(32),
               letterSpacing: 2,
-              color: "#02B2FE"
+              color: "#02B2FE",
+              paddingBottom:verticalScale(8)
             }}
           >
             Forgot?
@@ -288,7 +170,7 @@ class LoginScreen extends Component {
           <Button
             label={"LOGIN"}
             disabled={false}
-            onPress={() => alert("progress")}
+            onPress={this.onSubmit}
             styles={{
               button: {
                 height: verticalScale(50),
@@ -312,8 +194,21 @@ class LoginScreen extends Component {
             }}
           />
         </View>
+        {this.props.loader&& <Spinner visible={this.props.loader} text={"sending...."}/>}
       </KeyboardAwareScrollView>
     );
   }
 }
-export default LoginScreen;
+const mapStateToProps = ({ Loginreducer }) => {
+  const { email,password ,loader} = Loginreducer;
+ return{
+  email,
+  password,
+  loader
+ }
+};
+export default connect(
+  mapStateToProps,
+  { LoginUpdate }
+)(LoginScreen);
+

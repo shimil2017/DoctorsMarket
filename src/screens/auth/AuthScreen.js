@@ -13,6 +13,7 @@ import Swiper from "react-native-swiper";
 import OpenAppSettings from "react-native-app-settings";
 import { Icon } from "react-native-elements";
 import Button from "../../components/button";
+import { intialState } from "../../actions/Signupactions";
 import { ViewContainer } from "../../components/viewcontainer";
 import {
   colors,
@@ -25,6 +26,7 @@ import {
 import { resetNavigationTo } from "../../utils";
 import { Images } from "../../Themes/Images";
 const { height, width } = Dimensions.get("window");
+import { connect } from "react-redux";
 //import Button from "../../components/button";
 const styles = {
   wrapper: {},
@@ -53,7 +55,7 @@ const styles = {
   }
 };
 
-export default class AuthScreen extends Component {
+ class AuthScreen extends Component {
   constructor(props) {
     super(props);
     console.log(normalize, "normalize");
@@ -67,6 +69,7 @@ export default class AuthScreen extends Component {
     navigate("Login");
   };
   registerUser = () => {
+    this.props.intialState()
     const {
       navigation: { navigate }
     } = this.props;
@@ -202,3 +205,4 @@ export default class AuthScreen extends Component {
     );
   }
 }
+export default connect(null,{intialState})(AuthScreen)

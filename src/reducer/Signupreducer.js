@@ -1,4 +1,4 @@
-import { SIGNUP_UPDATE, LOCATION_DETAIL } from "../actions/Signupactions";
+import { SIGNUP_UPDATE, LOCATION_DETAIL,RESET } from "../actions/Signupactions";
 
 const INITIAL_STATE = {
   firstname: "",
@@ -40,6 +40,8 @@ export default (state = INITIAL_STATE, action) => {
         city:
           action.payload.subAdminArea != null ? action.payload.subAdminArea : ""
       };
+     case  RESET:
+      return INITIAL_STATE; 
     default:
       return state;
   }

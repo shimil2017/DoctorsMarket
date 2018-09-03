@@ -25,7 +25,7 @@ export function locationfetching() {
           });
         });
       } else {
-        reject(Error("Error fetching data."));
+        reject(Error("Error fetching data."));  
         Alert.alert(
           "Permissions Request",
           "Please go to Settings > Applications > Doctors Market > Permissions >Location allow Doctors Market to access your location",
@@ -34,7 +34,7 @@ export function locationfetching() {
             { text: "cancel", onPress: () => console.log("cancelled") }
           ],
           { cancelable: false }
-        );
+        ); 
       }
     });
   });

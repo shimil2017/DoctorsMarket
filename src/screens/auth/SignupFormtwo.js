@@ -5,8 +5,10 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  Alert
 } from "react-native";
+import OpenAppSettings from "react-native-app-settings";
 import {
   colors,
   normalize,
@@ -48,6 +50,7 @@ class SignupFormtwo extends Component {
   }
 
   async componentWillMount() {
+    let context=this;
     if (!this.props.country && !this.state.state) {
       this.setState({ visible: true });
       locationfetching()
@@ -56,12 +59,13 @@ class SignupFormtwo extends Component {
           this.setState({ visible: false });
         })
         .catch(error => {
-          console.log(error);
+        //  alert("error")
+         // console.log(error);
+         context.setState({ visible: false });
           DeviceEventEmitter.emit(
             "showToast",
             "Unable to fetch location details"
-          );
-          this.setState({ visible: false });
+          );     
         });
     }
   }
@@ -144,8 +148,8 @@ class SignupFormtwo extends Component {
       });
       return;
     }
-
-    if (city.length > 2 && !Regex.validateString(city)) {
+    
+    if (!city && city.length >2 || /^\s*$/.test(city)) {
       this.setState({
         cityerror: "City name contains illegal charecter"
       });
@@ -159,7 +163,7 @@ class SignupFormtwo extends Component {
       return;
     }
 
-    if (streetname.length > 2 && !Regex.validateString(streetname)) {
+    if (!streetname && streetname.length >2 || /^\s*$/.test(streetname)) {
       this.setState({
         streeterror: "Street name contains illegal charecter"
       });
@@ -268,8 +272,10 @@ class SignupFormtwo extends Component {
                     fontFamily: fonts.fontPrimaryLight
                   }
                 ]}
-                onChangeText={data =>
+                onChangeText={data =>{
+                  console.log(data,"data");
                   SignupUpdate({ prop: "nationality", value: data })
+                }
                 }
               />
             </View>
@@ -357,7 +363,7 @@ class SignupFormtwo extends Component {
               ref="telephone"
               value={this.props.telephone}
               defaultValue={""}
-              keyboardType="number"
+              keyboardType="numeric"
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
@@ -373,9 +379,9 @@ class SignupFormtwo extends Component {
             />
             <View style={{ width, height: 40 }} />
           </View>
-          <Modal
+        { this.state.visible&& <Modal
             backdrop={false}
-            isOpen={this.state.visible}
+            isOpen={this.state.visible}           
             onClosed={() => this.setState({ visible: false })}
             style={{
               flex: 1,
@@ -399,7 +405,7 @@ class SignupFormtwo extends Component {
                 Fecthing location details...
               </Text>
             </View>
-          </Modal>
+          </Modal>}
         </KeyboardAwareScrollView>
         <NextButton onPress={this.submit} />
       </View>

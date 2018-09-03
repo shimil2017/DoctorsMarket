@@ -57,16 +57,17 @@ export default class SignupupFormfour extends Component {
           style={{
             flex: 0.1,
             paddingHorizontal: scale(10),
-            paddingTop: verticalScale(18)
+            paddingTop: verticalScale(18),
+           
           }}
         >
           <Text
             style={{
               fontFamily: fonts.fontPrimaryLight,
-              fontSize: normalize(36),
-              marginVertical: verticalScale(10),
+              fontSize: normalize(36),          
               color: "#000000",
-              opacity: 0.8
+              opacity: 0.8,
+              
             }}
           >
             Terms of Services
@@ -75,14 +76,15 @@ export default class SignupupFormfour extends Component {
         <View
           style={{
             flex: 0.9,
-            marginBottom: verticalScale(15)
+            marginTop:verticalScale(15),
+            marginBottom: verticalScale(10)
           }}
         >
           <ScrollView
             style={{
               flex: 0.5,
               paddingTop: verticalScale(15),
-              marginLeft: scale(2)
+              marginLeft: scale(2),
             }}
           >
             <Text

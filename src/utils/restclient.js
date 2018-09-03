@@ -26,39 +26,41 @@ class RestClient {
     });
   }
 
-  static post(url, params, token = "", userId = "") {
-    let context = this,
-      logintoken;
+  static post(url, params, body) {  
+    let context = this; 
+    let settings = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      timeout: 1000 * 1 * 60
+    };
+  
+
+    if (params) {
+      (settings.headers.id = params.id)
+    }
+
+      if (params.token) {
+        settings.headers.token = params.token;
+      }
+
+      if(body){
+        settings.body=JSON.stringify(body)
+      }
+      console.log(Connection.getBaseUrl() + url,"connection")
     return new Promise(function(fulfill, reject) {
       context
         .isConnected()
-        .then(() => {
-          console.log(
-            "url=> ",
-            Connection.getResturl() + url,
-            " requestObject=> ",
-            params,
-            " x-auth-token => ",
-            token,
-            " x-user-id => ",
-            userId
-          );
-          fetch(Connection.getResturl() + url, {
-            method: "POST",
-            timeout: 1000 * 1 * 60,
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-auth-token": token,
-              "x-user-id": userId
-            },
-            body: JSON.stringify(params)
-          })
+        .then(() => {         
+          fetch(Connection.getBaseUrl() + url,settings)
             .then(response => {
+              console.log(response)
               return response.text();
             })
             .then(responseText => {
-              console.log("responseText*****", responseText);
+              
               fulfill(JSON.parse(responseText));
             })
             .catch(error => {
@@ -80,6 +82,7 @@ class RestClient {
 
   static put(url, params, token = "", userId = "") {
     let context = this;
+   
     return new Promise(function(fulfill, reject) {
       context
         .isConnected()
@@ -90,9 +93,7 @@ class RestClient {
             timeout: 1000 * 1 * 60,
             headers: {
               Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-auth-token": token,
-              "x-user-id": userId
+              "Content-Type": "application/json"            
             },
             body: JSON.stringify(params)
           })

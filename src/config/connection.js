@@ -7,11 +7,11 @@
  * */
 //ankush = "192.168.0.24:3000",
 //sheenam = "192.168.0.174:3000",
-const localhost = "localhost:3000", 
+const localhost = "172.24.2.236", 
   sivali = "192.168.0.88:3000",
   staging = "cheforder.ignivastaging.com:4003";
 
-const running_url = staging,
+const running_url = localhost,
   http_url = `http://${running_url}`,
   socket_url = `ws://${running_url}/websocket`,
   apiBase_url = `http://${running_url}/rest/v1/`,

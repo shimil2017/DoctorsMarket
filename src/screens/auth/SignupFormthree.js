@@ -24,6 +24,54 @@ import { connect } from "react-redux";
 import Regex from "../../utils/regex";
 import { SignupUpdate } from "../../actions/Signupactions";
 class SignupFormthree extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      specialityerror:"",
+      crberror:"",
+      gmcerror:""
+    }
+  }
+  onSubmit=()=>{
+    this.setState({
+      specialityerror:"",
+      crberror:"",
+      gmcerror:""
+    });
+  //alert(this.props.crbverified)
+    const {
+      specialist, crbverified, gmcnumber,
+      navigation: { navigate }
+    } = this.props;
+    const {
+      specialityerror,
+      crberror,
+      gmcerror
+    } = this.state;
+    if (specialist.length === 0) {
+      this.setState({
+        specialityerror: "Please select your specialty?"
+      });
+      return;
+    }
+
+    if(!crbverified){
+      this.setState({
+        crberror: "Have you verifeid CRB?"
+      });
+      return;
+    }
+    if(crbverified&&gmcnumber.length===0){
+      this.setState({
+        gmcerror: "Please enter GMC number"
+      });
+      return;
+    }
+
+    navigate("Signupfour");
+
+   
+  }
   render() {
     const {
       navigation: { navigate },
@@ -45,7 +93,8 @@ class SignupFormthree extends Component {
             style={{
               flex: 0.2,
               paddingHorizontal: scale(10),
-              paddingTop: verticalScale(18)
+              paddingTop: verticalScale(18),
+              
             }}
           >
             <Text
@@ -62,7 +111,7 @@ class SignupFormthree extends Component {
           </View>
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
             <Dropdown
-              error={""}
+              error={this.state.specialityerror}
               label={"what is you speciality?"}
               data={doctorslist}
               fontSize={15}
@@ -82,22 +131,7 @@ class SignupFormthree extends Component {
                 SignupUpdate({ prop: "specialist", value: data })
               }
             />
-            <TextField
-              ref={this.emailRef}
-              value={"Firstname"}
-              defaultValue={"Firstname"}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              onFocus={this.onFocus}
-              onChangeText={this.onChangeText}
-              onSubmitEditing={this.onSubmitEmail}
-              returnKeyType="next"
-              label="what is your availabilty?"
-              error={""}
-              tintColor={"#02B2FE"}
-            />
+            
             <View
               style={{
                 height: verticalScale(70),
@@ -132,8 +166,17 @@ class SignupFormthree extends Component {
                   label="No"
                 />
               </View>
+              <Text
+                style={{
+                  color: "rgb(213, 0, 0)",
+                  fontSize: 12,
+                  marginVertical: verticalScale(2)
+                }}
+              >
+                {this.state.crberror}
+              </Text>
             </View>
-            <TextField
+        <TextField
               ref="gmcnumber"
               value={this.props.gmcnumber}
               defaultValue={""}
@@ -148,12 +191,12 @@ class SignupFormthree extends Component {
               onSubmitEditing={this.onSubmitEmail}
               returnKeyType="next"
               label="Enter your GMC number"
-              error={""}
+              error={this.state.gmcerror}
               tintColor={"#02B2FE"}
             />
           </View>
         </KeyboardAwareScrollView>
-        <NextButton onPress={() => navigate("Signupfour")} />
+        <NextButton onPress={this.onSubmit} />
       </View>
     );
   }

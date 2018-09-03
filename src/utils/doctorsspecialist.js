@@ -1,4 +1,4 @@
-const doctorslist = [
+/*const doctorslist = [
   {
     value: "Allergist"
   },
@@ -54,5 +54,7 @@ const doctorslist = [
     value: "Pediatrician"
   }
 ];
+*/
+const doctorslist=[{"id":"5","value":"Reproductive Endocrinology","locum_type_id":"1","created_at":"2018-09-03 12:11:43","modified_at":"2018-09-03 12:11:43"}, {"id":"6","value":"Maternal-Fetal Medicine","locum_type_id":"1","created_at":"2018-09-03 12:11:43","modified_at":"2018-09-03 12:11:43"}, {"id":"7","value":"Gynecologic Oncology","locum_type_id":"1","created_at":"2018-09-03 12:11:43","modified_at":"2018-09-03 12:11:43"}, {"id":"8","value":"Urogynecology","locum_type_id":"1","created_at":"2018-09-03 12:11:43","modified_at":"2018-09-03 12:11:43"}]
 
 module.exports = doctorslist;
