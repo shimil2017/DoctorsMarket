@@ -14,12 +14,10 @@ import { NetInfo, Alert, Platform } from "react-native";
 let logintoken = "";
 
 class RestClient {
-  static isConnected() {
-   // alert("hree")
+  static isConnected() {  
     let context = this;
-    return new Promise(function(fulfill, reject) {
-   //   fulfill(true)
-    /*  NetInfo.isConnected.fetch().then(isConnected => {
+    return new Promise(function(fulfill, reject) {     
+      NetInfo.isConnected.fetch().then(isConnected => {
         console.log(isConnected)
         if (isConnected) {
        //   alert(isConnected)
@@ -28,8 +26,7 @@ class RestClient {
         else {
           reject(isConnected);
         }
-      });
-      */
+      });    
      fulfill(true)
     });
   }

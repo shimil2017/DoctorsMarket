@@ -68,7 +68,8 @@ class SignupupFormfour extends Component {
       postcode: SignupReducer.postalcode,
       home_tel_no: SignupReducer.telephone,
       locum_specialties_id: SignupReducer.specialist.id,
-      acnt_status: SignupReducer.crbverified == true ? 1 : 0,
+      status: SignupReducer.crbverified == true ? 1 : 0,
+      acnt_status:0,
       gmc_number: SignupReducer.gmcnumber,
       latitude:SignupReducer.position.lat?SignupReducer.position.lat:null,
       longitude:SignupReducer.position.lng?SignupReducer.position.lng:null,
@@ -106,7 +107,7 @@ class SignupupFormfour extends Component {
           <Text
             style={{
               fontFamily: fonts.fontPrimaryLight,
-              fontSize: normalize(36),
+              fontSize: normalize(32),
               color: "#000000",
               opacity: 0.8
             }}
