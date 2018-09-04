@@ -51,6 +51,7 @@ class SignupupFormfour extends Component {
         "Please accept the terms of service"
       );
       return;
+
     }
 
     let body = {
@@ -69,6 +70,8 @@ class SignupupFormfour extends Component {
       locum_specialties_id: SignupReducer.specialist.id,
       acnt_status: SignupReducer.crbverified == true ? 1 : 0,
       gmc_number: SignupReducer.gmcnumber,
+      latitude:SignupReducer.position.lat?SignupReducer.position.lat:null,
+      longitude:SignupReducer.position.lng?SignupReducer.position.lng:null,
       avail_types_id: "",
       device_token: ""
     };
@@ -80,7 +83,7 @@ class SignupupFormfour extends Component {
 
     //console.log(body, "signup reducr");
     //navigate("Main");
-    // this.props.registraion(body);
+     this.props.registraion({body,navigate:navigate});
   };
   render() {
     return (
@@ -210,17 +213,19 @@ class SignupupFormfour extends Component {
             />
           </View>
         </View>
-        {this.state.visible && (
-          <Spinner visible={this.state.visible} text={"Signing...."} />
+        {this.props.loader && (
+          <Spinner visible={this.props.loader} text={"Signing...."} />
         )}
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ SignupReducer }) => {
+const mapStateToProps = ({ SignupReducer,Loginreducer }) => {
+  const {loader}=Loginreducer
   return {
-    SignupReducer
+    SignupReducer,
+    loader
   };
 };
 

@@ -20,9 +20,9 @@ const INITIAL_STATE = {
   position: {},
   telephone: "",
   specialist: {},
-  crbverified: "",
+  crbverified: null,
   gmcnumber: "",
-  registerdata: []
+
 };
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -44,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
         city:
           action.payload.subAdminArea != null ? action.payload.subAdminArea : ""
       };
+
     case RESET:
       return INITIAL_STATE;
     default:

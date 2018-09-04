@@ -15,14 +15,22 @@ let logintoken = "";
 
 class RestClient {
   static isConnected() {
+   // alert("hree")
     let context = this;
     return new Promise(function(fulfill, reject) {
-      NetInfo.isConnected.fetch().then(isConnected => {
-        if (isConnected) fulfill(isConnected);
+   //   fulfill(true)
+    /*  NetInfo.isConnected.fetch().then(isConnected => {
+        console.log(isConnected)
+        if (isConnected) {
+       //   alert(isConnected)
+         // console.log(isConnected)
+          fulfill(isConnected)}
         else {
           reject(isConnected);
         }
       });
+      */
+     fulfill(true)
     });
   }
 
@@ -38,7 +46,7 @@ class RestClient {
     };
   
 
-    if (params) {
+    if (params.id) {
       (settings.headers.id = params.id)
     }
 
@@ -48,12 +56,8 @@ class RestClient {
 
       if(body){
         settings.body=JSON.stringify(body)
-      }
-      console.log(Connection.getBaseUrl() + url,"connection")
-    return new Promise(function(fulfill, reject) {
-      context
-        .isConnected()
-        .then(() => {         
+      }  
+    return new Promise(function(fulfill, reject) {                     
           fetch(Connection.getBaseUrl() + url,settings)
             .then(response => {
               console.log(response)
@@ -69,14 +73,7 @@ class RestClient {
                   "Please check your internet connectivity or our server is not responding."
               });
               console.warn("eroro", error);
-            });
-        })
-        .catch(error => {
-          fulfill({
-            message:
-              "Please check your internet connectivity or our server is not responding."
-          });
-        });
+            });       
     });
   }
 

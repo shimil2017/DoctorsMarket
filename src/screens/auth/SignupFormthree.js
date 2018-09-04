@@ -60,13 +60,13 @@ class SignupFormthree extends Component {
       return;
     }
 
-    if (!crbverified) {
+    if (crbverified===null) {
       this.setState({
         crberror: "Have you verifeid CRB?"
       });
       return;
     }
-    if (crbverified && gmcnumber.length === 0) {
+    if (gmcnumber.length === 0) {
       this.setState({
         gmcerror: "Please enter GMC number"
       });

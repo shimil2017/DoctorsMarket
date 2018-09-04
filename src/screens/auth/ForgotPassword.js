@@ -45,13 +45,17 @@ export default class ForgotPassword extends Component {
     this.setState({ loader: true });
 
     RestClient.post(
-      "/locum-admin/apis/forgotPassword",
+      "/apis/forgotPassword",
       {},
       { email: this.state.email }
     ).then(response => {
       console.log(response, "resposne");
+
+      DeviceEventEmitter.emit(
+        "showToast",
+        response.message
+      );
       this.setState({ loader: false });
-      DeviceEventEmitter.emit(response.message);
     });
   }
 

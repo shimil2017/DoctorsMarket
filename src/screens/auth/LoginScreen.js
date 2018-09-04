@@ -10,11 +10,11 @@ import {
 const { height, width } = Dimensions.get("window");
 import { TextField } from "react-native-material-textfield";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
-import Regex from "../../utils/regex";
+
 import NextButton from "../../components/nextbutton";
 import Entypo from "react-native-vector-icons/Entypo";
 import Button from "../../components/button";
-import { LoginUpdate, LoginChecking } from "../../actions/Loginactions";
+import { LoginUpdate, LoginChecking,reset } from "../../actions/Loginactions";
 import Spinner from "../../components/spinner";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -26,7 +26,7 @@ import {
   fonts
 } from "../../config";
 import { connect } from "react-redux";
-
+import Regex from "../../utils/regex";
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +36,9 @@ class LoginScreen extends Component {
       passworderror: ""
     };
     this.renderPasswordAccessory = this.renderPasswordAccessory.bind(this);
+  }
+  componentWillMount(){
+    this.props.reset()
   }
 
   renderPasswordAccessory() {
@@ -60,18 +63,43 @@ class LoginScreen extends Component {
       password
     } = this.props;
     console.log(this.props.email, this.props.password, "passs");
+   this.setState({emailerror:"",passworderror:""})
+  
+
+    if (!Regex.validateEmail(email)) {
+      this.setState({
+        emailerror: "Please enter valid email adress"
+      });
+      return;
+    }
+
+    if (!password) {
+      this.setState({
+        passworderror: "Please enter your  password"
+      });
+      return;
+    }
+
+
+
     let body = {
       email,
       password
     };
-    this.props.LoginChecking({ email, password, navigate: navigate });
+    this.props.LoginChecking({ body, navigate: navigate });
   };
+  onFocus=()=>{}
+
+_handleFocusNextField=nextField=>{
+    this.refs[nextField].focus();
+}
 
   render() {
     let { secureTextEntry } = this.state;
 
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      LoginUpdate
     } = this.props;
 
     //let defaultEmail = "test@gmail.com".replace(/\s+/g, "_").toLowerCase();
@@ -111,12 +139,14 @@ class LoginScreen extends Component {
             defaultValue={""}
             keyboardType="email-address"
             autoCapitalize="none"
-            autoCorrect={false}
-            autoFocus={true}
+            autoCorrect={false}            
             enablesReturnKeyAutomatically={true}
             onFocus={this.onFocus}
             onChangeText={data => LoginUpdate({ prop: "email", value: data })}
-            onSubmitEditing={() => this.refs["password"].focus()}
+            onSubmitEditing={this._handleFocusNextField.bind(
+              this,
+              "password"
+            )}
             returnKeyType="next"
             label="Email Address"
             error={this.state.emailerror}
@@ -216,5 +246,5 @@ const mapStateToProps = ({ Loginreducer }) => {
 };
 export default connect(
   mapStateToProps,
-  { LoginUpdate, LoginChecking }
+  { LoginUpdate, LoginChecking,reset }
 )(LoginScreen);

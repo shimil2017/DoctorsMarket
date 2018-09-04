@@ -35,8 +35,11 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>This app needs your current location</string>
+  
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>This app needs your current location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Ultralight.otf</string>

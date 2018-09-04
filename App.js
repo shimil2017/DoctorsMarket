@@ -44,7 +44,7 @@ export default class App extends Component<{}> {
     this.showToastListener = DeviceEventEmitter.addListener(
       "showToast",
       text => {
-        this.toast.show(text, DURATION.LENGTH_LONG);
+        this.toast.show(text, 3000);
       }
     );
   }
@@ -78,13 +78,15 @@ export default class App extends Component<{}> {
           />
           <Locumapp />
           <Toast
+            position={'bottom'}
             ref={ref => (this.toast = ref)}
             opacity={0.7}
             textStyle={{ fontSize: 12 }}
             style={{
               backgroundColor: "#02B2FE",
               borderRadius: 100,
-              bottom: 1
+              bottom: 1,
+              paddingBottom: 10
             }}
           />
         </View>
