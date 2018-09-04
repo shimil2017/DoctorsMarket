@@ -26,8 +26,10 @@ export default class InvoicesScreen extends Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
+      //  console.log()
         let source = { uri: response.uri };
         console.log(source,"source")
+        var formData = new FormData();
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
 

@@ -21,6 +21,7 @@ import Toast, { DURATION } from "react-native-easy-toast";
 import configureStore from "./src/store/configureStore";
 import { Provider } from "react-redux";
 import Spinner from "./src/components/spinner";
+import SplashScreen from 'react-native-smart-splash-screen'
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -41,6 +42,11 @@ export default class App extends Component<{}> {
     console.log(store, "store");
   }
   componentDidMount() {
+    SplashScreen.close({
+      animationType: SplashScreen.animationType.fade,
+      duration: 850,
+      delay: 500,
+   })
     this.showToastListener = DeviceEventEmitter.addListener(
       "showToast",
       text => {
