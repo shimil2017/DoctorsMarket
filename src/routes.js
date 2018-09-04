@@ -225,18 +225,20 @@ const MainTabNavigator = TabNavigator(
 );
 export const Locumapp = StackNavigator(
   {
-    auth: {
-      screen: AuthStackNavigator,
-      navigationOptions: {
-        header: null
-      }
-    },
+
     Main: {
       screen: MainTabNavigator,
       navigationOptions: {
         header: null
       }
+    },
+    auth: {
+      screen: AuthStackNavigator,
+      navigationOptions: {
+        header: null
+      }
     }
+   
   },
   {
     headerMode: "screen",
