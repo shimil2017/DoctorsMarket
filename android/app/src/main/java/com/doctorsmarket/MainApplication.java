@@ -3,6 +3,7 @@ package com.doctorsmarket;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeDocumentPicker(),
             new RCTSplashScreenPackage(),
             new ImagePickerPackage(),
             new RNGeocoderPackage(),

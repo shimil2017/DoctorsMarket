@@ -106,7 +106,7 @@ class SignupupFormfour extends Component {
           <Text
             style={{
               fontFamily: fonts.fontPrimaryLight,
-              fontSize: normalize(36),
+              fontSize: normalize(32),
               color: "#000000",
               opacity: 0.8
             }}
