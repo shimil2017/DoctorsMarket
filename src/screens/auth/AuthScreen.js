@@ -58,10 +58,11 @@ const styles = {
 class AuthScreen extends Component {
   constructor(props) {
     super(props);
-    console.log(normalize, "normalize");
+   
   }
 
   loginUser = () => {
+    //alert("koo")
     const {
       navigation: { navigate }
     } = this.props;

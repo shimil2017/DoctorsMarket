@@ -20,7 +20,7 @@ const running_url = staging,
 
 export default class Connection {
   static getResturl() {
-    return apiBase_url;
+    return apiBase_url+'/locummedical/';
   }
 
   static getSocketResturl() {
@@ -28,7 +28,8 @@ export default class Connection {
   }
 
   static getBaseUrl() {
-    return http_url;
+   // local=http_url+'/locummedical';
+    return http_url
   }
 
   static getMedia(_id) {

@@ -12,14 +12,17 @@ import {
 import { Button } from "react-native-elements";
 import { NavigationActions } from "react-navigation";
 import { resetNavigationTo, openURLInView } from "../../utils";
+import {Logotapi} from "../../actions/Loginactions"
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 const window = Dimensions.get("window");
+import {connect} from "react-redux"
 import Icon from "react-native-vector-icons/FontAwesome";
+import Connection from "../../config/connection";
 const AVATAR_SIZE = 120;
 const ROW_HEIGHT = 60;
 const PARALLAX_HEADER_HEIGHT = 350;
 const STICKY_HEADER_HEIGHT = 70;
-export default class ProfileScreen extends Component {
+ class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,20 +38,24 @@ export default class ProfileScreen extends Component {
         "Clojure core.async",
         "The Functional Database",
         "Deconstructing the Database",
-        "Hammock Driven Development",
+        "Edit Prfoile",
         "Logout"
       ])
     };
   }
 
-  signOutUser = () => {
-    const { navigation } = this.props;
-
-    resetNavigationTo("auth", navigation);
+  onPress = (rowData) => {
+    console.log(rowData,"rowData")
+    const { navigation,userid,token } = this.props;
+    if(rowData==='Logout'){
+     this.props.Logotapi({id:userid,token,navigation})
+    }else if(rowData==='Edit Prfoile'){
+      navigation.navigate('Editprofile');
+    }
   };
 
   render() {
-    const { onScroll = () => {} } = this.props;
+    const { onScroll = () => {},navigation:{navigate} } = this.props;
     return (
       <ListView
         ref="ListView"
@@ -56,7 +63,7 @@ export default class ProfileScreen extends Component {
         dataSource={this.state.dataSource}
         renderRow={rowData => (
           <TouchableOpacity
-            onPress={() => this.signOutUser()}
+            onPress={() => this.onPress(rowData)}
             key={rowData}
             style={styles.row}
           >
@@ -92,6 +99,7 @@ export default class ProfileScreen extends Component {
             )}
             renderForeground={() => (
               <View key="parallax-header" style={styles.parallaxHeader}>
+              <TouchableOpacity onPress={()=>navigate('Changeprofile')}>
                 <Image
                   style={styles.avatar}
                   source={{
@@ -101,6 +109,7 @@ export default class ProfileScreen extends Component {
                     height: AVATAR_SIZE
                   }}
                 />
+                </TouchableOpacity>
                 <Text style={styles.sectionSpeakerText}>
                   Talks by Rich Hickey
                 </Text>
@@ -125,6 +134,15 @@ export default class ProfileScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ SignupReducer,Loginreducer }) => {
+  const {userid,token,userdata}=Loginreducer
+  return {
+   
+    userid,token,userdata
+  };
+};
+export default connect(mapStateToProps,{Logotapi})(ProfileScreen)
 
 const styles = StyleSheet.create({
   container: {

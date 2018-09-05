@@ -16,7 +16,7 @@ import {
   DeviceEventEmitter,
   ActivityIndicator
 } from "react-native";
-import { Locumapp } from "./src/routes";
+import AppNavigation from "./src/AppNavigation";
 import Toast, { DURATION } from "react-native-easy-toast";
 import configureStore from "./src/store/configureStore";
 import { Provider } from "react-redux";
@@ -82,7 +82,7 @@ export default class App extends Component<{}> {
             translucent
             animated
           />
-          <Locumapp />
+          <AppNavigation />
           <Toast
             position={'bottom'}
             ref={ref => (this.toast = ref)}
