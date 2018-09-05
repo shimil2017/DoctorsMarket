@@ -14,25 +14,25 @@ import { NetInfo, Alert, Platform } from "react-native";
 let logintoken = "";
 
 class RestClient {
-  static isConnected() {  
+  static isConnected() {
     let context = this;
-    return new Promise(function(fulfill, reject) {     
+    return new Promise(function(fulfill, reject) {
       NetInfo.isConnected.fetch().then(isConnected => {
-        console.log(isConnected)
+        console.log(isConnected);
         if (isConnected) {
-       //   alert(isConnected)
-         // console.log(isConnected)
-          fulfill(isConnected)}
-        else {
+          //   alert(isConnected)
+          // console.log(isConnected)
+          fulfill(isConnected);
+        } else {
           reject(isConnected);
         }
-      });    
-     fulfill(true)
+      });
+      fulfill(true);
     });
   }
 
-  static post(url, params, body) {  
-    let context = this; 
+  static post(url, params, body) {
+    let context = this;
     let settings = {
       method: "POST",
       headers: {
@@ -41,40 +41,35 @@ class RestClient {
       },
       timeout: 1000 * 1 * 60
     };
-  
 
     if (params.id) {
-      (settings.headers.id = params.id)
+      settings.headers.id = params.id;
     }
 
-      if (params.token) {
-        settings.headers.token = params.token;
-      }
+    if (params.token) {
+      settings.headers.token = params.token;
+    }
 
-      if(body){
-        settings.body=JSON.stringify(body)
-      }  
-    return new Promise(function(fulfill, reject) {                     
-          fetch(Connection.getBaseUrl() + url,settings)
-            .then(response => {
-              console.log(response)
-              return response.text();
-            })
-            .then(responseText => {
-              
-              fulfill(JSON.parse(responseText));
-            })
-            .catch(error => {
-              fulfill({
-                message:
-                  "Please check your internet connectivity or our server is not responding."
-              });
-              console.warn("eroro", error);
-            });       
+    if (body) {
+      settings.body = JSON.stringify(body);
+    }
+    return new Promise(function(fulfill, reject) {
+      fetch(Connection.getBaseUrl() + url, settings)
+        .then(response => {
+          console.log(response);
+          return response.text();
+        })
+        .then(responseText => {
+          fulfill(JSON.parse(responseText));
+        })
+        .catch(error => {
+          fulfill({
+            message: "Please check your internet connectivity"
+          });
+          console.warn("eroro", error);
+        });
     });
   }
-
-
 
   static get(url, params, token = "", userId = "") {
     let context = this;
@@ -119,49 +114,47 @@ class RestClient {
   }
 
   static imageUpload(url, params, body) {
-    let context = this; 
+    let context = this;
     let settings = {
       method: "POST",
       headers: {
         Accept: "application/json",
-       "Content-Type": "multipart/form-data;"   
+        "Content-Type": "multipart/form-data;"
       },
       timeout: 1000 * 1 * 60
     };
-  
 
     if (params.id) {
-      (settings.headers.id = params.id)
+      settings.headers.id = params.id;
     }
 
-      if (params.token) {
-        settings.headers.token = params.token;
-      }
+    if (params.token) {
+      settings.headers.token = params.token;
+    }
 
-      if(body){
-        settings.body=body
-      }  
-      console.log(Connection.getBaseUrl()+ url,body)
+    if (body) {
+      settings.body = body;
+    }
+    console.log(Connection.getBaseUrl() + url, body);
     return new Promise(function(fulfill, reject) {
-     
-          //console.log("url=> ",Connection.getResturl() + url ," requestObject=> ",params, " x-auth-token => ",token, " x-user-id => ",userId )
-          fetch(Connection.getBaseUrl() + url,settings)
-            .then(response => {
-              return response.text();
-            })
-            .then(responseText => {
-              //console.log('response ******** ',responseText)
-              fulfill(JSON.parse(responseText));
-            })
-            .catch(error => {
-              console.warn(error);
-              fulfill({
-                message:
-                  "Please check your internet connectivity or our server is not responding."
-              });
-            });        
+      //console.log("url=> ",Connection.getResturl() + url ," requestObject=> ",params, " x-auth-token => ",token, " x-user-id => ",userId )
+      fetch(Connection.getBaseUrl() + url, settings)
+        .then(response => {
+          return response.text();
+        })
+        .then(responseText => {
+          //console.log('response ******** ',responseText)
+          fulfill(JSON.parse(responseText));
+        })
+        .catch(error => {
+          console.warn(error);
+          fulfill({
+            message:
+              "Please check your internet connectivity or our server is not responding."
+          });
+        });
     });
-  } 
+  }
 }
 
 export default RestClient;
