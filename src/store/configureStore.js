@@ -4,9 +4,16 @@ import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import reducers from "./combineReducers";
 
+
+
 import { persistStore, autoRehydrate } from "redux-persist";
 import { AsyncStorage } from "react-native";
+
+
+
 const isDebuggingInChrome = false;
+
+
 const loggerMiddleware = createLogger();
 const middlewares = [thunkMiddleware];
 
@@ -31,7 +38,7 @@ export default function configureStore() {
         store,
         {
           storage: AsyncStorage,
-          whitelist: ["NotifiReducer"]
+          whitelist: ["Loginreducer"]
         },
         () => resolve(store)
       );

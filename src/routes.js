@@ -24,6 +24,8 @@ import SignupFormfour from "./screens/auth/SignupFormfour";
 import EIcon from "react-native-vector-icons/Ionicons";
 import { globalStyles } from "./Themes/globalStyle";
 import SignupupFormfour from "./screens/auth/SignupFormfour";
+import Editprofile from "./screens/profile/Editprofile"
+import ChangeProfileImage from "./screens/profile/Changeprofile"
 /*
  headerStyle: config.navigation.tab
       ? globalStyles.header
@@ -127,7 +129,26 @@ const MyProfileStackNavigator = StackNavigator({
     navigationOptions: {
       header: null
     }
-  }
+  },
+  Editprofile:{
+    screen:Editprofile,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title:"Edit profile",
+      tabBarVisible: false
+    }
+  },
+  Changeprofile:{
+    screen:ChangeProfileImage,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title:"Change profile",
+      tabBarVisible: false
+    }
+  },
+  
 });
 
 const MainTabNavigator = TabNavigator(
@@ -223,6 +244,7 @@ const MainTabNavigator = TabNavigator(
     )
   }
 );
+/*
 export const Locumapp = StackNavigator(
   { 
     
@@ -241,9 +263,28 @@ export const Locumapp = StackNavigator(
     
   },
   {
-    headerMode: "screen",
+    headerMode: "screen",  
     cardStyle: {
       backgroundColor: "transparent"
     }
   }
 );
+*/
+
+
+
+export default (routes = {
+  
+  auth: {
+    screen: AuthStackNavigator,
+    navigationOptions: {
+      header: null
+    }
+    },
+      Main: {
+        screen: MainTabNavigator,
+        navigationOptions: {
+          header: null
+        }
+   }      
+});

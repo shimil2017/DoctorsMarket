@@ -4,11 +4,12 @@ import {DocumentPicker, DocumentPickerUtil} from 'react-native-document-picker';
 export default class SheduleScreen extends Component {
 
   documentchooser=()=>{
-   DocumentPicker.show({
+  /* DocumentPicker.show({
       filetype: [DocumentPickerUtil.images()],
      }, (error, res) => {
       console.log(res,"res")
   })
+  */
   
   }
   render() {
