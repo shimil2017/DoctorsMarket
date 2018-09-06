@@ -3,6 +3,7 @@ package com.doctorsmarket;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FIRMessagingPackage(),
             new ImageResizerPackage(),
             new ReactNativeDocumentPicker(),
             new RCTSplashScreenPackage(),
