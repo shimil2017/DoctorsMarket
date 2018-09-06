@@ -291,7 +291,7 @@ class SignupFormtwo extends Component {
               }
               onSubmitEditing={this._handleFocusNextField.bind(this, "city")}
               returnKeyType="next"
-              label="State"
+              label="County"
               error={this.state.staterror}
               tintColor={"#02B2FE"}
             />
