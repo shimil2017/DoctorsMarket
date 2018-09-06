@@ -5,7 +5,8 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  Platform
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import StepIndicatorView from "../../components/stpeindicatorview";
@@ -64,6 +65,7 @@ class SignupupFormfour extends Component {
       nationalities_id: SignupReducer.nationality.id,
       street: SignupReducer.streetname,
       town: SignupReducer.city,
+      county:SignupReducer.state,
       country: SignupReducer.country,
       postcode: SignupReducer.postalcode,
       home_tel_no: SignupReducer.telephone,
@@ -74,9 +76,10 @@ class SignupupFormfour extends Component {
       latitude:SignupReducer.position.lat?SignupReducer.position.lat:null,
       longitude:SignupReducer.position.lng?SignupReducer.position.lng:null,
       avail_types_id: "",
-      device_token: ""
+      device_token: "",
+      device_type:Platform.OS=='ios'?1:0
     };
-    console.log(body, "body");
+    console.log(JSON.stringify(body), "body");
 
     setTimeout(() => {
       this.setState({ visible: false });

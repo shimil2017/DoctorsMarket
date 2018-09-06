@@ -11,7 +11,7 @@ const localhost = "172.24.2.236",
   sivali = "192.168.0.88:3000",
   staging = "34.211.31.84:8048";
 
-const running_url = staging,
+const running_url = localhost,
   http_url = `http://${running_url}`,
   socket_url = `ws://${running_url}/websocket`,
   apiBase_url = `http://${running_url}/rest/v1/`,
@@ -28,8 +28,8 @@ export default class Connection {
   }
 
   static getBaseUrl() {
-   // local=http_url+'/locummedical';
-    return http_url
+    let local=http_url+'/locummedical';
+    return local
   }
 
   static getMedia(_id) {

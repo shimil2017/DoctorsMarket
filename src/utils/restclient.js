@@ -53,6 +53,7 @@ class RestClient {
     if (body) {
       settings.body = JSON.stringify(body);
     }
+    console.log(Connection.getBaseUrl() + url, settings)
     return new Promise(function(fulfill, reject) {
       fetch(Connection.getBaseUrl() + url, settings)
         .then(response => {
