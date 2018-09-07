@@ -26,6 +26,7 @@ import { globalStyles } from "./Themes/globalStyle";
 import SignupupFormfour from "./screens/auth/SignupFormfour";
 import Editprofile from "./screens/profile/Editprofile"
 import ChangeProfileImage from "./screens/profile/Changeprofile"
+import Changepassword from "./screens/profile/Changepassword"
 /*
  headerStyle: config.navigation.tab
       ? globalStyles.header
@@ -145,6 +146,15 @@ const MyProfileStackNavigator = StackNavigator({
       headerStyle: globalStyles.headerWithoutShadow,
       headerTintColor: "#37a6ff",
       title:"Change profile",
+      tabBarVisible: false
+    }
+  },
+  Changepassword:{
+    screen:Changepassword,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title:"Change password",
       tabBarVisible: false
     }
   },

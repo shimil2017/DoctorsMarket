@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard
 } from "react-native";
 import { Button } from "react-native-elements";
 import { NavigationActions } from "react-navigation";
@@ -37,7 +38,7 @@ const STICKY_HEADER_HEIGHT = 70;
         "Design, Composition, and Performance",
         "Clojure core.async",
         "The Functional Database",
-        "Deconstructing the Database",
+        "Changepassword",
         "Edit Prfoile",
         "Logout"
       ])
@@ -51,6 +52,8 @@ const STICKY_HEADER_HEIGHT = 70;
      this.props.Logotapi({id:userid,token,navigation})
     }else if(rowData==='Edit Prfoile'){
       navigation.navigate('Editprofile');
+    }else if(rowData==='Changepassword'){
+      navigation.navigate('Changepassword');
     }
   };
 

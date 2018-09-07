@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  Keyboard
 } from "react-native";
 import {
   colors,
@@ -23,8 +24,10 @@ import { connect } from "react-redux";
 import Button from "../../components/button";
 import Spinner from "../../components/spinner";
 import RestClient from "../../utils/restclient";
-import { profileimageupdate } from "../../actions/Loginactions";
+import { profileimageupdate ,reset} from "../../actions/Loginactions";
 import {toast} from "../../components/toast"
+
+
 class ChangeProfileImage extends Component {
   constructor(props) {
     super(props);
@@ -88,6 +91,7 @@ class ChangeProfileImage extends Component {
           toast({text:response.message})
         } else if (response.status == 401) {
           navigate("auth");
+          this.props.reset()
           toast({text:"Alreay logined on another deivce",type:"danger"})
         /*  DeviceEventEmitter.emit(
             "showToast",
@@ -210,5 +214,5 @@ const mapStateToProps = ({ Loginreducer }) => {
 };
 export default connect(
   mapStateToProps,
-  { profileimageupdate }
+  { profileimageupdate ,reset}
 )(ChangeProfileImage);
