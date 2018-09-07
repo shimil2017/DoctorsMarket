@@ -347,7 +347,7 @@ class SignupFormtwo extends Component {
                 this,
                 "telephone"
               )}
-              returnKeyType="next"
+              returnKeyType="done"
               label="Postal code"
               error={this.state.postalerror}
               tintColor={"#02B2FE"}
@@ -366,7 +366,7 @@ class SignupFormtwo extends Component {
                 SignupUpdate({ prop: "telephone", value: data })
               }
               onSubmitEditing={this.onSubmitEmail}
-              returnKeyType="next"
+              returnKeyType="done"
               label="Telephone"
               error={this.state.telephoneerror}
               tintColor={"#02B2FE"}

@@ -101,6 +101,7 @@ class ChangeProfileImage extends Component {
         }
       })
       .catch(error => {
+        this.setState({ loader: false})
         toast({text:"Please check your internet",type:"danger"})
        // DeviceEventEmitter.emit("showToast", "Please check your internet");
       });
