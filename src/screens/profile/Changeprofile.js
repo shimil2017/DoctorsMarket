@@ -24,6 +24,7 @@ import Button from "../../components/button";
 import Spinner from "../../components/spinner";
 import RestClient from "../../utils/restclient";
 import { profileimageupdate } from "../../actions/Loginactions";
+import {toast} from "../../components/toast"
 class ChangeProfileImage extends Component {
   constructor(props) {
     super(props);
@@ -83,17 +84,21 @@ class ChangeProfileImage extends Component {
           this.setState({ loader: false, changing: false });
           data = response.data;
           this.props.profileimageupdate(data);
-          DeviceEventEmitter.emit("showToast", response.message);
+        //  DeviceEventEmitter.emit("showToast", response.message);
+          toast({text:response.message})
         } else if (response.status == 401) {
           navigate("auth");
-          DeviceEventEmitter.emit(
+          toast({text:"Alreay logined on another deivce",type:"danger"})
+        /*  DeviceEventEmitter.emit(
             "showToast",
             "Alreay logined on another deivce"
           );
+          */
         }
       })
       .catch(error => {
-        DeviceEventEmitter.emit("showToast", "Please check your internet");
+        toast({text:"Please check your internet",type:"danger"})
+       // DeviceEventEmitter.emit("showToast", "Please check your internet");
       });
   };
   selectPhotoTapped = () => {

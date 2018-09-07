@@ -34,7 +34,7 @@ import country from "../../utils/country";
 import Spinner from "../../components/spinner";
 import { locationfetching } from "../../utils/locationfetching";
 import Modal from "react-native-modalbox";
-
+import {toast} from "../../components/toast"
 class SignupFormtwo extends Component {
   constructor(props) {
     super(props);
@@ -62,11 +62,8 @@ class SignupFormtwo extends Component {
         .catch(error => {
           //  alert("error")
           // console.log(error);
-          context.setState({ visible: false });
-          DeviceEventEmitter.emit(
-            "showToast",
-            "Unable to fetch location details"
-          );
+          context.setState({ visible: false });         
+          toast({text:"Unable to fetch location details",type:"danger"})
         });
     }
   }

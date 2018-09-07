@@ -23,6 +23,7 @@ import Regex from "../../utils/regex";
 import Spinner from "../../components/spinner";
 import RestClient from "../../utils/restclient";
 import Modal from "react-native-modalbox";
+import {toast} from "../../components/toast"
 export default class ForgotPassword extends Component {
   constructor(props) {
     super(props);
@@ -51,10 +52,12 @@ export default class ForgotPassword extends Component {
     ).then(response => {
       console.log(response, "resposne");
 
-      DeviceEventEmitter.emit(
+   /*   DeviceEventEmitter.emit(
         "showToast",
         response.message
       );
+      */
+     toast({text:response.message})
       this.setState({ loader: false });
     });
   }
