@@ -340,7 +340,7 @@ class SignupFormone extends Component {
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
               onChangeText={text => this.setState({ confirmpassword: text })}
-              returnKeyType="next"
+              returnKeyType="done"
               label="Confirm password"
               error={this.state.matcherror}
               tintColor={"#02B2FE"}
