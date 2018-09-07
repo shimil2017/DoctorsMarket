@@ -7,6 +7,7 @@ export const PROFILE_UPDATE = "PROFILE_UPDATE";
 import RestClient from "../utils/restclient";
 import { DeviceEventEmitter } from "react-native";
 import { resetNavigationTo } from "../utils";
+import {Toastmessage} from "../components/toast"
 export const LoginUpdate = ({ prop, value }) => {
   return {
     type: LOGIN_UPDATE,
@@ -31,7 +32,8 @@ export const LoginChecking = ({ body, navigate }) => dispatch => {
       navigate("Main");
     } else {
       dispatch({ type: LOGIN_FAIL });
-      DeviceEventEmitter.emit("showToast", response.message);
+      Toastmessage(response.message)
+      //DeviceEventEmitter.emit("showToast", response.message);
     }
   });
 };

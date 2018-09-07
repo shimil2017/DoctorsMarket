@@ -23,7 +23,6 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4C21E0B4AEC006451C7 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		2D02E4C31E0B4AEC006451C7 /* libRCTImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */; };
 		2D02E4C41E0B4AEC006451C7 /* libRCTLinking-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E881DF850E9000B6D8A /* libRCTLinking-tvOS.a */; };
@@ -39,11 +38,11 @@
 		42125349213CFE880034A76B /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E37DC12137B72600E74B40 /* libReactNativePermissions.a */; };
 		4212534A213CFE8F0034A76B /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E37DC52137B72600E74B40 /* libRNI18n.a */; };
 		421AD1D621417FDE00EB4524 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4298319821412EFD0019BC1E /* libRNFIRMessaging.a */; };
-		421AD1F12141810700EB4524 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421AD1F42141810700EB4524 /* FirebaseCore.framework */; };
 		421AD1F22141810700EB4524 /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421AD1F52141810700EB4524 /* FirebaseMessaging.framework */; };
 		421AD2C6214184ED00EB4524 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421AD2C3214184EC00EB4524 /* Messages.framework */; };
 		421AD2C7214184ED00EB4524 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421AD2C4214184ED00EB4524 /* MobileCoreServices.framework */; };
 		421AD2C8214184ED00EB4524 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421AD2C5214184ED00EB4524 /* LocalAuthentication.framework */; };
+		42969DCB21425C03007B3E9D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42969DCA21425C03007B3E9D /* GoogleService-Info.plist */; };
 		4299907263EC09AC67210DBA /* libPods-DoctorsMarket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F2FF3462995B608B79C27CD /* libPods-DoctorsMarket-tvOS.a */; };
 		42CFE4CE213E891D005CA69D /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42CFE4CD213E8217005CA69D /* libRNImagePicker.a */; };
 		42CFE5B3213EAA05005CA69D /* libRCTSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42CFE518213E896B005CA69D /* libRCTSplashScreen.a */; };
@@ -503,6 +502,9 @@
 		421AD2C3214184EC00EB4524 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		421AD2C4214184ED00EB4524 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		421AD2C5214184ED00EB4524 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		42969DCA21425C03007B3E9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42969E66214261F9007B3E9D /* libFirebaseCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		42969E67214261F9007B3E9D /* libFirebaseMessaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseMessaging.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		42EB38952139778700E5B694 /* SF-UI-Display-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Heavy.otf"; path = "../fonts/SF-UI-Display-Heavy.otf"; sourceTree = "<group>"; };
 		42EB38C42139778700E5B694 /* SF-UI-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Light.otf"; path = "../fonts/SF-UI-Display-Light.otf"; sourceTree = "<group>"; };
 		42EB38C52139778800E5B694 /* SF-UI-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Medium.otf"; path = "../fonts/SF-UI-Display-Medium.otf"; sourceTree = "<group>"; };
@@ -571,7 +573,6 @@
 				421AD2C6214184ED00EB4524 /* Messages.framework in Frameworks */,
 				421AD2C7214184ED00EB4524 /* MobileCoreServices.framework in Frameworks */,
 				421AD2C8214184ED00EB4524 /* LocalAuthentication.framework in Frameworks */,
-				421AD1F12141810700EB4524 /* FirebaseCore.framework in Frameworks */,
 				421AD1F22141810700EB4524 /* FirebaseMessaging.framework in Frameworks */,
 				421AD1D621417FDE00EB4524 /* libRNFIRMessaging.a in Frameworks */,
 				42CFE5B7213EAA30005CA69D /* libSafariViewManager.a in Frameworks */,
@@ -749,6 +750,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42969E66214261F9007B3E9D /* libFirebaseCore.a */,
+				42969E67214261F9007B3E9D /* libFirebaseMessaging.a */,
 				421AD2C5214184ED00EB4524 /* LocalAuthentication.framework */,
 				421AD2C3214184EC00EB4524 /* Messages.framework */,
 				421AD2C4214184ED00EB4524 /* MobileCoreServices.framework */,
@@ -1000,6 +1003,7 @@
 		89C2B19B45AD4702A94B6396 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				42969DCA21425C03007B3E9D /* GoogleService-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1121,7 +1125,11 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = JTPYA3C428;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1659,6 +1667,7 @@
 				42EB38D12139778A00E5B694 /* SF-UI-Display-Semibold.otf in Resources */,
 				42EB38D22139778A00E5B694 /* SF-UI-Display-Thin.otf in Resources */,
 				42EB38D32139778A00E5B694 /* SF-UI-Display-Black.otf in Resources */,
+				42969DCB21425C03007B3E9D /* GoogleService-Info.plist in Resources */,
 				42EB38D42139778A00E5B694 /* SF-UI-Display-Ultralight.otf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -1806,7 +1815,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1946,7 +1954,7 @@
 				CODE_SIGN_ENTITLEMENTS = DoctorsMarket/DoctorsMarket.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JTPYA3C428;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-app-settings/ios",
@@ -1983,7 +1991,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DoctorsMarket/DoctorsMarket.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JTPYA3C428;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-app-settings/ios",
