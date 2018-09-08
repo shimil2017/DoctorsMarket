@@ -38,6 +38,7 @@
     "react-native-parallax-scroll-view": "^0.21.3",
     "react-native-permissions": "^1.1.1",
     "react-native-safari-view": "^2.1.0",
+    "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-smart-splash-screen": "^2.3.5",
     "react-native-step-indicator": "0.0.9",
     "react-native-swiper": "^1.5.13",

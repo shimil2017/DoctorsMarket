@@ -6,6 +6,7 @@ import {
   NavigationActions
 } from "react-navigation";
 import { Icon } from "react-native-elements";
+import ENIcon from "react-native-vector-icons/SimpleLineIcons";
 import { colors } from "./config";
 import LoginScreen from "./screens/auth/LoginScreen";
 //import SignupScreen from "./screens/auth/SignupScreen";
@@ -167,10 +168,10 @@ const MainTabNavigator = TabNavigator(
       screen: SheduleStackNavigator,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon
+          <ENIcon
             containerStyle={{ justifyContent: "center", alignItems: "center" }}
             color={tintColor}
-            name="access-time"
+            name="home"
             size={33}
           />
         )
