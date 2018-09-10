@@ -4,7 +4,8 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
+  Image
 } from "react-native";
 import {
   colors,
@@ -25,7 +26,7 @@ import ActionButton from "react-native-action-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import Icon from "react-native-vector-icons/Ionicons";
 import StepIndicatorView from "../../components/stpeindicatorview";
-import doctorslist from "../../utils/doctorsspecialist";
+
 import { Dropdown } from "react-native-material-dropdown";
 import { connect } from "react-redux";
 import Regex from "../../utils/regex";
@@ -40,26 +41,48 @@ import {
   DocumentPicker,
   DocumentPickerUtil
 } from "react-native-document-picker";
+import doctorslist from "../../utils/doctorsspecialist";
+import ImagePicker from "react-native-image-picker";
 class Professional extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      specialist: { value: "", id: "", locum_type_id: "" },
+      doc1: { uri: "" },
+      doc2: { uri: "" },
+      crbveri: false,
+      gmc: "",
       specialityerror: "",
       crberror: "",
       gmcerror: ""
     };
   }
 
-  documentchooser = () => {
-    DocumentPicker.show(
-      {
-        filetype: [DocumentPickerUtil.images()]
-      },
-      (error, res) => {
-        console.log(res, "res");
+  componentWillMount() {
+    const { userdata } = this.props;
+    console.log(userdata.specialist);
+    var result = doctorslist.find(obj => {
+      //  console.log(obj.id, userdata.locum_specialties_id);
+      return obj.id == userdata.locum_specialties_id;
+    });
+    console.log(result);
+    //if()
+    this.setState({
+      specialist: {
+        value: result.value,
+        id: result.id,
+        locum_type_id: result.locum_type_id
       }
-    );
-  };
+    });
+
+    this.setState({ crbveri: userdata.status == 1 ? true : false });
+    this.setState({ gmc: userdata.gmc_number });
+    if (userdata.doc1) this.setState({ doc1: { uri: userdata.doc1 } });
+    if (userdata.doc2) this.setState({ doc2: { uri: userdata.doc2 } });
+    console.log(this.state.doc1, this.state.doc2);
+    debugger;
+  }
+
   onSubmit = () => {
     Keyboard.dismiss();
     this.setState({
@@ -67,43 +90,49 @@ class Professional extends Component {
       crberror: "",
       gmcerror: ""
     });
-    //alert(this.props.crbverified)
-    const {
-      specialist,
-      crbverified,
-      gmcnumber,
-      navigation: { navigate }
-    } = this.props;
-    const { specialityerror, crberror, gmcerror } = this.state;
-    if (!specialist.value && !specialist.id) {
-      this.setState({
-        specialityerror: "Please select your speciality?"
-      });
-      return;
-    }
-
-    if (crbverified === null) {
-      this.setState({
-        crberror: "Have you verifeid CRB?"
-      });
-      return;
-    }
-    if (gmcnumber.length === 0) {
-      this.setState({
-        gmcerror: "Please enter GMC number"
-      });
-      return;
-    }
-
-    //  console.log(this.props.SignupReducer, "SignupReducer");
-
-    navigate("Signupfour");
   };
+
+  documentchooser = number => {
+    const { SignupUpdate } = this.props;
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true
+      }
+    };
+
+    ImagePicker.showImagePicker(options, response => {
+      console.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.log("User cancelled photo picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
+      } else {
+        //  console.log()
+        if (number === 1) {
+          this.setState({ doc1: response });
+          //  SignupUpdate({ prop: "doc1", value: response });
+        } else if (number === 2) {
+          this.setState({ doc1: response });
+          // SignupUpdate({ prop: "doc2", value: response });
+        }
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+      }
+    });
+  };
+
   render() {
     const {
       navigation: { navigate },
       SignupUpdate
     } = this.props;
+    console.log(this.state.doc1);
     // alert(this.props.crbverified);
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -118,7 +147,7 @@ class Professional extends Component {
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
             <Dropdown
               error={this.state.specialityerror}
-              label={"Add more speciality?"}
+              label={"Do you need to change Speciality?"}
               data={doctorslist}
               fontSize={15}
               pickerStyle={{
@@ -126,7 +155,7 @@ class Professional extends Component {
                 borderColor: "#666666",
                 borderRadius: 5
               }}
-              value={this.props.specialist.value}
+              value={this.state.specialist.value}
               itemTextStyle={[
                 {
                   fontSize: 16,
@@ -134,9 +163,8 @@ class Professional extends Component {
                 }
               ]}
               onChangeText={(value, index) =>
-                SignupUpdate({
-                  prop: "specialist",
-                  value: { value: value, id: doctorslist[index].id }
+                this.setState({
+                  specialist: { value: value, id: doctorslist[index].id }
                 })
               }
             />
@@ -161,17 +189,13 @@ class Professional extends Component {
                 }}
               >
                 <Genderfield
-                  selected={this.props.crbverified === true}
-                  onPress={() =>
-                    SignupUpdate({ prop: "crbverified", value: true })
-                  }
+                  selected={this.state.crbveri === true}
+                  onPress={() => this.setState({ crbveri: true })}
                   label="Yes"
                 />
                 <Genderfield
-                  selected={this.props.crbverified === false}
-                  onPress={() =>
-                    SignupUpdate({ prop: "crbverified", value: false })
-                  }
+                  selected={this.state.crbveri === false}
+                  onPress={() => this.setState({ crbveri: false })}
                   label="No"
                 />
               </View>
@@ -187,16 +211,14 @@ class Professional extends Component {
             </View>
             <TextField
               ref="gmcnumber"
-              value={this.props.gmcnumber}
+              value={this.state.gmc}
               defaultValue={""}
               keyboardType="default"
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
-              onChangeText={text =>
-                SignupUpdate({ prop: "gmcnumber", value: text })
-              }
+              onChangeText={text => this.setState({ gmc: text })}
               onSubmitEditing={() => Keyboard.dismiss()}
               returnKeyType="next"
               label="Enter your GMC number"
@@ -220,14 +242,30 @@ class Professional extends Component {
             >
               <TouchableOpacity
                 style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center"
+                  flex: 1
                 }}
-                onPress={this.documentchooser}
+                onPress={() => this.documentchooser(1)}
               >
-                <EIcon name="documents" size={20} />
-                <Text>click to upload</Text>
+                {!this.props.doc2 ? (
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <EIcon name="documents" size={20} />
+                    <Text>click to upload</Text>
+                  </View>
+                ) : (
+                  <Image
+                    source={{ uri: this.state.doc1.uri }}
+                    style={{
+                      width: width - 40,
+                      height: verticalScale(200)
+                    }}
+                  />
+                )}
               </TouchableOpacity>
             </View>
             <View
@@ -243,14 +281,30 @@ class Professional extends Component {
             >
               <TouchableOpacity
                 style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center"
+                  flex: 1
                 }}
-                onPress={this.documentchooser}
+                onPress={() => this.documentchooser(2)}
               >
-                <EIcon name="documents" size={20} />
-                <Text>click to upload</Text>
+                {!this.props.doc2 ? (
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <EIcon name="documents" size={20} />
+                    <Text>click to upload</Text>
+                  </View>
+                ) : (
+                  <Image
+                    source={{ uri: this.state.doc2.uri }}
+                    style={{
+                      width: width - 40,
+                      height: verticalScale(200)
+                    }}
+                  />
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -298,11 +352,16 @@ class Professional extends Component {
     );
   }
 }
-const mapStateToProps = ({ SignupReducer }) => {
-  const { specialist, crbverified, gmcnumber } = SignupReducer;
-  return { specialist, crbverified, gmcnumber, SignupReducer };
+
+const mapStateToProps = ({ Loginreducer }) => {
+  const { userid, token, userdata } = Loginreducer;
+  return {
+    userid,
+    token,
+    userdata
+  };
 };
 export default connect(
   mapStateToProps,
-  { SignupUpdate }
+  null
 )(Professional);
