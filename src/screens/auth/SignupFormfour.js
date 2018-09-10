@@ -26,6 +26,8 @@ import CheckBox from "react-native-modest-checkbox";
 import { connect } from "react-redux";
 import { registraion } from "../../actions/Signupactions";
 import Spinner from "../../components/spinner";
+import { toast } from "../../components/toast";
+
 class SignupupFormfour extends Component {
   constructor(props) {
     super(props);
@@ -46,11 +48,8 @@ class SignupupFormfour extends Component {
       SignupReducer,
       navigation: { navigate }
     } = this.props;
-    if (!this.state.isChecked) {
-      DeviceEventEmitter.emit(
-        "showToast",
-        "Please accept the terms of service"
-      );
+    if (!this.state.isChecked) {     
+      toast({text:"Please accept the terms of service",type:"danger"})
       return;
 
     }

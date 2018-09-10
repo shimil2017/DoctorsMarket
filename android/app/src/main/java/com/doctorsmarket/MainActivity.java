@@ -15,6 +15,13 @@ public class MainActivity extends ReactActivity {
         return "DoctorsMarket";
     }
 
+
+   @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
     @Override
 protected void onCreate(Bundle savedInstanceState) {
        RCTSplashScreen.openSplashScreen(this);   //open splashscreen

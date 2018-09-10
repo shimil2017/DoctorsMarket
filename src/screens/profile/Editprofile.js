@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Keyboard
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -18,6 +19,7 @@ import {
 import { TextField } from "react-native-material-textfield";
 import Button from "../../components/button";
 const { height, width } = Dimensions.get("window");
+import { reset } from "../../actions/Loginactions";
 export default class ChangeProfileImage extends Component {
   render() {
     const {

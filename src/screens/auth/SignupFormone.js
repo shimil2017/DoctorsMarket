@@ -252,9 +252,9 @@ class SignupFormone extends Component {
                 SignupUpdate({ prop: "phonenumber", value: text })
               }
               onSubmitEditing={() => {
-                Keyboard.dismiss(), this.refs["phonenumber"].blur();
+                Keyboard.dismiss();
               }}
-              returnKeyType="next"
+              returnKeyType="done"
               label="Phone number"
               error={this.state.phonenumbererror}
               tintColor={"#02B2FE"}
@@ -340,7 +340,7 @@ class SignupFormone extends Component {
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
               onChangeText={text => this.setState({ confirmpassword: text })}
-              returnKeyType="next"
+              returnKeyType="done"
               label="Confirm password"
               error={this.state.matcherror}
               tintColor={"#02B2FE"}

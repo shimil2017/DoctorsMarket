@@ -7,6 +7,7 @@
  */
 
 import React, { Component } from "react";
+import { Root } from "native-base";
 import {
   Platform,
   StyleSheet,
@@ -74,6 +75,7 @@ export default class App extends Component<{}> {
       );
     }
     return (
+      <Root>
       <Provider store={this.state.store}>
         <View style={styles.container}>
           <StatusBar
@@ -97,6 +99,7 @@ export default class App extends Component<{}> {
           />
         </View>
       </Provider>
+      </Root>
     );
   }
 }

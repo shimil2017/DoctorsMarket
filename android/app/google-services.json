@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "409813439710",
+    "firebase_url": "https://doctorsmarket-51631.firebaseio.com",
+    "project_id": "doctorsmarket-51631",
+    "storage_bucket": "doctorsmarket-51631.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409813439710:android:161b83e107b0755d",
+        "android_client_info": {
+          "package_name": "com.doctorsmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409813439710-9lolhatksrtcecauu4cq7umvrovaiipl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj9CO6ogmtsnJeSHxzyf22X3n9dOIicPI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

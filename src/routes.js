@@ -6,6 +6,7 @@ import {
   NavigationActions
 } from "react-navigation";
 import { Icon } from "react-native-elements";
+import ENIcon from "react-native-vector-icons/SimpleLineIcons";
 import { colors } from "./config";
 import LoginScreen from "./screens/auth/LoginScreen";
 //import SignupScreen from "./screens/auth/SignupScreen";
@@ -26,6 +27,7 @@ import { globalStyles } from "./Themes/globalStyle";
 import SignupupFormfour from "./screens/auth/SignupFormfour";
 import Editprofile from "./screens/profile/Editprofile"
 import ChangeProfileImage from "./screens/profile/Changeprofile"
+import Changepassword from "./screens/profile/Changepassword"
 /*
  headerStyle: config.navigation.tab
       ? globalStyles.header
@@ -148,6 +150,15 @@ const MyProfileStackNavigator = StackNavigator({
       tabBarVisible: false
     }
   },
+  Changepassword:{
+    screen:Changepassword,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title:"Change password",
+      tabBarVisible: false
+    }
+  },
   
 });
 
@@ -157,10 +168,10 @@ const MainTabNavigator = TabNavigator(
       screen: SheduleStackNavigator,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon
+          <ENIcon
             containerStyle={{ justifyContent: "center", alignItems: "center" }}
             color={tintColor}
-            name="access-time"
+            name="home"
             size={33}
           />
         )

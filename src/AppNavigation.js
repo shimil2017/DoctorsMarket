@@ -25,7 +25,7 @@ class AppNavigation extends Component {
     const { userid, token } = this.props;
 
     const AppNavigator = StackNavigator(routes, {
-      initialRouteName: userid && token ? "Main" : "auth",
+      initialRouteName: userid && token ? "Main" : "Main",
       headerMode: "screen",
       cardStyle: {
         backgroundColor: "transparent"

@@ -4,6 +4,7 @@ export const RESET = "RESET";
 import RestClient from "../utils/restclient";
 import { LOGIN_CHECKING,  LOGIN_SUCCESS,LOGIN_FAIL} from "../actions/Loginactions"
 import { DeviceEventEmitter} from "react-native";
+import {toast} from "../components/toast"
 export const SignupUpdate = ({ prop, value }) => {
   return {
     type: SIGNUP_UPDATE,
@@ -35,10 +36,8 @@ export const registraion = ({ body, navigate }) => dispatch =>{
       navigate("Main")
     }else{
       dispatch({type:LOGIN_FAIL})
-      DeviceEventEmitter.emit(
-        "showToast",
-        response.message
-      );
+  
+      toast({text: response.message})
     }
   });
 };
