@@ -22,7 +22,9 @@ const INITIAL_STATE = {
   specialist: {},
   crbverified: null,
   gmcnumber: "",
-
+  doc1: "",
+  doc2: "",
+  fcmtoken: ""
 };
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {

@@ -4,8 +4,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  Keyboard,
-  Image
+  Keyboard
 } from "react-native";
 import {
   colors,
@@ -16,6 +15,7 @@ import {
   fonts
 } from "../../config";
 const { height, width } = Dimensions.get("window");
+import EIcon from "react-native-vector-icons/Entypo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import StepIndicator from "../../components/stepindicator";
 import { TextField } from "react-native-material-textfield";
@@ -29,14 +29,18 @@ import doctorslist from "../../utils/doctorsspecialist";
 import { Dropdown } from "react-native-material-dropdown";
 import { connect } from "react-redux";
 import Regex from "../../utils/regex";
-import EIcon from "react-native-vector-icons/Entypo";
 import { SignupUpdate } from "../../actions/Signupactions";
+
+import Button from "../../components/button";
+
+import { toast } from "../../components/toast";
+
+import RestClient from "../../utils/restclient";
 import {
   DocumentPicker,
   DocumentPickerUtil
 } from "react-native-document-picker";
-import ImagePicker from "react-native-image-picker";
-class SignupFormthree extends Component {
+class Professional extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,6 +49,17 @@ class SignupFormthree extends Component {
       gmcerror: ""
     };
   }
+
+  documentchooser = () => {
+    DocumentPicker.show(
+      {
+        filetype: [DocumentPickerUtil.images()]
+      },
+      (error, res) => {
+        console.log(res, "res");
+      }
+    );
+  };
   onSubmit = () => {
     Keyboard.dismiss();
     this.setState({
@@ -57,8 +72,6 @@ class SignupFormthree extends Component {
       specialist,
       crbverified,
       gmcnumber,
-      doc1,
-      doc2,
       navigation: { navigate }
     } = this.props;
     const { specialityerror, crberror, gmcerror } = this.state;
@@ -86,63 +99,11 @@ class SignupFormthree extends Component {
 
     navigate("Signupfour");
   };
-
-  /*  documentchooser = number => {
-    //alert("lpp");+
-    const { SignupUpdate } = this.props;
-    DocumentPicker.show(
-      {
-        filetype: [DocumentPickerUtil.images()]
-      },
-      (error, res) => {
-        // console.log(res, "res");
-        if (number === 1) {
-          SignupUpdate({ prop: "doc1", value: res });
-        } else if (number === 2) {
-          SignupUpdate({ prop: "doc2", value: res });
-        }
-      }
-    );
-  };
-*/
-  documentchooser = number => {
-    const { SignupUpdate } = this.props;
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true
-      }
-    };
-
-    ImagePicker.showImagePicker(options, response => {
-      console.log("Response = ", response);
-
-      if (response.didCancel) {
-        console.log("User cancelled photo picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else if (response.customButton) {
-        console.log("User tapped custom button: ", response.customButton);
-      } else {
-        //  console.log()
-        if (number === 1) {
-          SignupUpdate({ prop: "doc1", value: response });
-        } else if (number === 2) {
-          SignupUpdate({ prop: "doc2", value: response });
-        }
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-      }
-    });
-  };
   render() {
     const {
       navigation: { navigate },
       SignupUpdate
     } = this.props;
-    console.log(this.props.doc1);
     // alert(this.props.crbverified);
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -154,30 +115,10 @@ class SignupFormthree extends Component {
             paddingTop: verticalScale(18)
           }}
         >
-          <StepIndicatorView position={2} />
-          <View
-            style={{
-              flex: 0.2,
-              paddingHorizontal: scale(10),
-              paddingTop: verticalScale(18)
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: fonts.fontPrimaryLight,
-                fontSize: normalize(36),
-                marginVertical: verticalScale(10),
-                color: "#000000",
-                opacity: 0.8
-              }}
-            >
-              Professional Details
-            </Text>
-          </View>
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
             <Dropdown
               error={this.state.specialityerror}
-              label={"What is you speciality?"}
+              label={"Add more speciality?"}
               data={doctorslist}
               fontSize={15}
               pickerStyle={{
@@ -279,30 +220,14 @@ class SignupFormthree extends Component {
             >
               <TouchableOpacity
                 style={{
-                  flex: 1
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
                 }}
-                onPress={() => this.documentchooser(1)}
+                onPress={this.documentchooser}
               >
-                {!this.props.doc2 ? (
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <EIcon name="documents" size={20} />
-                    <Text>click to upload</Text>
-                  </View>
-                ) : (
-                  <Image
-                    source={{ uri: this.props.doc1.uri }}
-                    style={{
-                      width: width - 40,
-                      height: verticalScale(200)
-                    }}
-                  />
-                )}
+                <EIcon name="documents" size={20} />
+                <Text>click to upload</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -322,37 +247,62 @@ class SignupFormthree extends Component {
                   alignItems: "center",
                   justifyContent: "center"
                 }}
-                onPress={() => this.documentchooser(2)}
+                onPress={this.documentchooser}
               >
-                {!this.props.doc2 ? (
-                  <View>
-                    <EIcon name="documents" size={20} />
-                    <Text>click to upload</Text>
-                  </View>
-                ) : (
-                  <Image
-                    source={{ uri: this.props.doc2.uri }}
-                    style={{
-                      width: width - 40,
-                      height: verticalScale(200)
-                    }}
-                  />
-                )}
+                <EIcon name="documents" size={20} />
+                <Text>click to upload</Text>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ width, height: verticalScale(80) }} />
+
+          <View
+            style={{
+              flex: 0.2,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Button
+              label={"SAVE"}
+              disabled={false}
+              onPress={this.onSubmit}
+              styles={{
+                button: {
+                  height: verticalScale(50),
+                  width: width - 70,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 5,
+                  paddingLeft: 15,
+                  paddingRight: 15,
+                  borderRadius: 50,
+                  marginVertical: verticalScale(40)
+                },
+
+                label: [
+                  {
+                    fontSize: normalize(16),
+                    color: "#FFFFFF",
+                    letterSpacing: 5
+                  }
+                ]
+              }}
+            />
+          </View>
+          {this.state.loader && (
+            <Spinner visible={this.state.loader} text="Changing email.." />
+          )}
+          <View style={{ width, height: 50, backgroundColor: "#fff" }} />
         </KeyboardAwareScrollView>
-        <NextButton onPress={this.onSubmit} />
       </View>
     );
   }
 }
 const mapStateToProps = ({ SignupReducer }) => {
-  const { specialist, crbverified, gmcnumber, doc1, doc2 } = SignupReducer;
-  return { specialist, crbverified, gmcnumber, SignupReducer, doc1, doc2 };
+  const { specialist, crbverified, gmcnumber } = SignupReducer;
+  return { specialist, crbverified, gmcnumber, SignupReducer };
 };
 export default connect(
   mapStateToProps,
   { SignupUpdate }
-)(SignupFormthree);
+)(Professional);

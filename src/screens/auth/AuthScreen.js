@@ -7,7 +7,8 @@ import {
   Image,
   DeviceEventEmitter,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Platform
 } from "react-native";
 import Swiper from "react-native-swiper";
 import OpenAppSettings from "react-native-app-settings";
@@ -27,6 +28,9 @@ import { resetNavigationTo } from "../../utils";
 import { Images } from "../../Themes/Images";
 const { height, width } = Dimensions.get("window");
 import { connect } from "react-redux";
+import FCM, { FCMEvent, NotificationActionType } from "react-native-fcm";
+import { SignupUpdate } from "../../actions/Signupactions";
+
 //import Button from "../../components/button";
 const styles = {
   wrapper: {},
@@ -58,7 +62,25 @@ const styles = {
 class AuthScreen extends Component {
   constructor(props) {
     super(props);
-   
+  }
+
+  async componentWillMount() {
+    const { SignupUpdate } = this.props;
+    if (Platform.OS === "android") {
+      FCM.requestPermissions();
+    } else {
+      FCM.requestPermissions({ badge: false, sound: true, alert: true })
+        .then(() => console.log("granted"))
+        .catch(() => console.tron.log("notification permission rejected"));
+    }
+
+    FCM.getFCMToken().then(token => {
+      console.log("TOKEN (getFCMToken)", token);
+      if (token) {
+        SignupUpdate({ prop: "fcmtoken", value: token });
+      }
+      // this.setState({ token: token || "" });
+    });
   }
 
   loginUser = () => {
@@ -208,5 +230,5 @@ class AuthScreen extends Component {
 }
 export default connect(
   null,
-  { intialState }
+  { intialState, SignupUpdate }
 )(AuthScreen);
