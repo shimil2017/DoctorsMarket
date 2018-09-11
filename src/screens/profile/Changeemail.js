@@ -25,16 +25,14 @@ import RestClient from "../../utils/restclient";
 import { connect } from "react-redux";
 import Spinner from "../../components/spinner";
 import { reset } from "../../actions/Loginactions";
-class Changepassword extends Component {
+class Changeemail extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: "",
+      emailerror: "",
       password: "",
-      newpassword: "",
-      confirmpassword: "",
       passworderror: "",
-      confirmpassworderror: "",
-      newpassworderror: "",
       loader: false
     };
   }
@@ -55,20 +53,13 @@ class Changepassword extends Component {
       });
       return;
     }
-    if (newpassword.length === 0) {
-      this.setState({ newpassworderror: "Please fill password" });
-      return;
-    }
-    if (newpassword.length < 2) {
+    if (!Regex.validateEmail(email)) {
       this.setState({
-        newpassworderror: "Password sholud be minimum two length character"
+        emailerror: "Please enter valid email adress"
       });
       return;
     }
-    if (newpassword !== confirmpassword) {
-      this.setState({ confirmpassworderror: "Password doesnot match!" });
-      return;
-    }
+
     this.setState({ loader: true });
     RestClient.post(
       "/apis/changePassword",
@@ -108,7 +99,23 @@ class Changepassword extends Component {
           }}
         >
           <TextField
-            ref="oldpassword"
+            ref="email"
+            value={this.state.email}
+            defaultValue={""}
+            keyboardType="default"
+            autoCapitalize="none"
+            autoCorrect={false}
+            enablesReturnKeyAutomatically={true}
+            onFocus={this.onFocus}
+            onChangeText={text => this.setState({ email: text })}
+            onSubmitEditing={() => this.refs["password"].focus()}
+            returnKeyType="next"
+            label="Email address"
+            error={this.state.emailerror}
+            tintColor={"#02B2FE"}
+          />
+          <TextField
+            ref="password"
             value={this.state.password}
             defaultValue={""}
             keyboardType="default"
@@ -117,42 +124,10 @@ class Changepassword extends Component {
             enablesReturnKeyAutomatically={true}
             onFocus={this.onFocus}
             onChangeText={text => this.setState({ password: text })}
-            onSubmitEditing={() => this.refs["newpassword"].focus()}
-            returnKeyType="next"
-            label="Old password"
+            onSubmitEditing={() => this.refs["password"].blur()}
+            returnKeyType="done"
+            label="Password"
             error={this.state.passworderror}
-            tintColor={"#02B2FE"}
-          />
-          <TextField
-            ref="newpassword"
-            value={this.state.newpassword}
-            defaultValue={""}
-            keyboardType="default"
-            autoCapitalize="none"
-            autoCorrect={false}
-            enablesReturnKeyAutomatically={true}
-            onFocus={this.onFocus}
-            onChangeText={text => this.setState({ newpassword: text })}
-            onSubmitEditing={() => this.refs["conpassword"].focus()}
-            returnKeyType="next"
-            label="New password"
-            error={this.state.newpassworderror}
-            tintColor={"#02B2FE"}
-          />
-          <TextField
-            ref="conpassword"
-            value={this.state.confirmpassword}
-            defaultValue={""}
-            keyboardType="default"
-            autoCapitalize="none"
-            autoCorrect={false}
-            enablesReturnKeyAutomatically={true}
-            onFocus={this.onFocus}
-            onChangeText={text => this.setState({ confirmpassword: text })}
-            onSubmitEditing={() => Keyboard.dismiss()}
-            returnKeyType="next"
-            label="Confirm password"
-            error={this.state.confirmpassworderror}
             tintColor={"#02B2FE"}
           />
 
@@ -164,7 +139,7 @@ class Changepassword extends Component {
             }}
           >
             <Button
-              label={"CHANGE PASSWORD"}
+              label={"CHANGE EMAIL"}
               disabled={false}
               onPress={this.onSubmit}
               styles={{
@@ -191,7 +166,7 @@ class Changepassword extends Component {
             />
           </View>
           {this.state.loader && (
-            <Spinner visible={this.state.loader} text="Changing password.." />
+            <Spinner visible={this.state.loader} text="Changing email.." />
           )}
         </KeyboardAwareScrollView>
       </View>
@@ -209,4 +184,4 @@ const mapStateToProps = ({ Loginreducer }) => {
 export default connect(
   mapStateToProps,
   { reset }
-)(Changepassword);
+)(Changeemail);

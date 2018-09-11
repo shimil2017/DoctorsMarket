@@ -25,7 +25,9 @@ export default class ChatList extends Component {
       navigation: { navigate }
     } = this.props;
     return (
-      <View style={{ flex: 1, marginHorizontal: 10 }}>
+      <View
+        style={{ flex: 1, paddingHorizontal: 10, backgroundColor: "#FFFFFF" }}
+      >
         <FlatList
           data={this.state.users}
           showsVerticalScrollIndicator={false}

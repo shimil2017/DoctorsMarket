@@ -48,12 +48,73 @@ class SignupupFormfour extends Component {
       SignupReducer,
       navigation: { navigate }
     } = this.props;
-    if (!this.state.isChecked) {     
-      toast({text:"Please accept the terms of service",type:"danger"})
+    if (!this.state.isChecked) {
+      toast({ text: "Please accept the terms of service", type: "danger" });
       return;
-
     }
 
+    console.log(SignupReducer);
+    //debugger;
+    let formdata = new FormData();
+
+    formdata.append("fname", SignupReducer.firstname);
+    formdata.append("lname", SignupReducer.lastname);
+    formdata.append("email", SignupReducer.email);
+    formdata.append("password", SignupReducer.password);
+    formdata.append("phone_number", SignupReducer.phonenumber);
+    formdata.append("genders_id", SignupReducer.gender == "male" ? "1" : "2");
+    formdata.append("nationalities_id", SignupReducer.nationality.id);
+    formdata.append("street", SignupReducer.streetname);
+    formdata.append("town", SignupReducer.city);
+
+    formdata.append("county", SignupReducer.state);
+    formdata.append("country", SignupReducer.country);
+    formdata.append("postcode", SignupReducer.postalcode);
+    formdata.append("home_tel_no", SignupReducer.telephone);
+    formdata.append("locum_specialties_id", SignupReducer.specialist.id);
+    formdata.append("status", SignupReducer.crbverified == true ? "1" : "0");
+
+    formdata.append("acnt_status", "0");
+    formdata.append("gmc_number", SignupReducer.gmcnumber);
+    formdata.append(
+      "latitude",
+      SignupReducer.position.lat ? SignupReducer.position.lat : ""
+    );
+    formdata.append(
+      "longitude",
+      SignupReducer.position.lng ? SignupReducer.position.lng : ""
+    );
+    formdata.append(
+      "longitude",
+      SignupReducer.position.lng ? SignupReducer.position.lng : ""
+    );
+    formdata.append("avail_types_id", "");
+    formdata.append("device_token", "");
+    formdata.append("device_type", Platform.OS == "ios" ? "1" : "0");
+    formdata.append("doc1", {
+      ...SignupReducer.doc1,
+      name: SignupReducer.doc1.fileName
+        ? SignupReducer.doc1.fileName
+        : SignupReducer.doc1.uri
+            .split("/")
+            .pop()
+            .split("#")[0]
+            .split("?")[0]
+    });
+    formdata.append("doc2", {
+      ...SignupReducer.doc2,
+      name: SignupReducer.doc2.fileName
+        ? SignupReducer.doc2.fileName
+        : SignupReducer.doc2.uri
+            .split("/")
+            .pop()
+            .split("#")[0]
+            .split("?")[0]
+    });
+    console.log(JSON.stringify(formdata));
+    //debugger;
+
+    /*
     let body = {
       fname: SignupReducer.firstname,
       lname: SignupReducer.lastname,
@@ -64,12 +125,15 @@ class SignupupFormfour extends Component {
       nationalities_id: SignupReducer.nationality.id,
       street: SignupReducer.streetname,
       town: SignupReducer.city,
+
+
       county:SignupReducer.state,
       country: SignupReducer.country,
       postcode: SignupReducer.postalcode,
       home_tel_no: SignupReducer.telephone,
       locum_specialties_id: SignupReducer.specialist.id,
       status: SignupReducer.crbverified == true ? 1 : 0,
+
       acnt_status:0,
       gmc_number: SignupReducer.gmcnumber,
       latitude:SignupReducer.position.lat?SignupReducer.position.lat:null,
@@ -78,15 +142,13 @@ class SignupupFormfour extends Component {
       device_token: "",
       device_type:Platform.OS=='ios'?1:0
     };
-    console.log(JSON.stringify(body), "body");
 
-    setTimeout(() => {
-      this.setState({ visible: false });
-    }, 3000);
+    */
+    //  console.log(JSON.stringify(body), "body");
 
     //console.log(body, "signup reducr");
     //navigate("Main");
-     this.props.registraion({body,navigate:navigate});
+    this.props.registraion({ formdata, navigate: navigate });
   };
   render() {
     return (
@@ -224,8 +286,8 @@ class SignupupFormfour extends Component {
   }
 }
 
-const mapStateToProps = ({ SignupReducer,Loginreducer }) => {
-  const {loader}=Loginreducer
+const mapStateToProps = ({ SignupReducer, Loginreducer }) => {
+  const { loader } = Loginreducer;
   return {
     SignupReducer,
     loader

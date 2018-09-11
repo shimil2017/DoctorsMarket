@@ -3,8 +3,10 @@ import {
   StackNavigator,
   TabNavigator,
   TabBarBottom,
-  NavigationActions
+  NavigationActions,
+  DrawerNavigator
 } from "react-navigation";
+import { View } from "react-native";
 import { Icon } from "react-native-elements";
 import ENIcon from "react-native-vector-icons/SimpleLineIcons";
 import { colors } from "./config";
@@ -25,9 +27,14 @@ import SignupFormfour from "./screens/auth/SignupFormfour";
 import EIcon from "react-native-vector-icons/Ionicons";
 import { globalStyles } from "./Themes/globalStyle";
 import SignupupFormfour from "./screens/auth/SignupFormfour";
-import Editprofile from "./screens/profile/Editprofile"
-import ChangeProfileImage from "./screens/profile/Changeprofile"
-import Changepassword from "./screens/profile/Changepassword"
+import Editprofile from "./screens/profile/Editprofile";
+import ChangeProfileImage from "./screens/profile/Changeprofile";
+import Changepassword from "./screens/profile/Changepassword";
+import Drawer from "./Drawer";
+import CustomHeader from "./components/customheader";
+import Changeemail from "./screens/profile/Changeemail";
+import ProfileDetail from "./screens/profile/Profiledetails";
+import Professional from "./screens/profile/Professionaldetails";
 /*
  headerStyle: config.navigation.tab
       ? globalStyles.header
@@ -92,7 +99,7 @@ const SheduleStackNavigator = StackNavigator(
     Shedule: {
       screen: SheduleScreen,
       navigationOptions: {
-        headerTitle: "Shedule"
+        header: props => <CustomHeader {...props} />
       }
     }
   },
@@ -105,7 +112,7 @@ const InvoicesStackNavigator = StackNavigator({
   Invoices: {
     screen: InvoicesScreen,
     navigationOptions: {
-      headerTitle: "Invoices"
+      header: props => <CustomHeader {...props} />
     }
   }
 });
@@ -113,7 +120,7 @@ const ChatStackNavigator = StackNavigator({
   ChatList: {
     screen: ChatList,
     navigationOptions: {
-      headerTitle: "Chat"
+      header: props => <CustomHeader {...props} />
     }
   },
   ChatScreen: {
@@ -132,34 +139,60 @@ const MyProfileStackNavigator = StackNavigator({
       header: null
     }
   },
-  Editprofile:{
-    screen:Editprofile,
+  Editprofile: {
+    screen: Editprofile,
     navigationOptions: {
       headerStyle: globalStyles.headerWithoutShadow,
       headerTintColor: "#37a6ff",
-      title:"Edit profile",
+      title: "Edit profile",
       tabBarVisible: false
     }
   },
-  Changeprofile:{
-    screen:ChangeProfileImage,
+  Changeprofile: {
+    screen: ChangeProfileImage,
     navigationOptions: {
       headerStyle: globalStyles.headerWithoutShadow,
       headerTintColor: "#37a6ff",
-      title:"Change profile",
+      title: "Change profile",
       tabBarVisible: false
     }
   },
-  Changepassword:{
-    screen:Changepassword,
+  Changepassword: {
+    screen: Changepassword,
     navigationOptions: {
       headerStyle: globalStyles.headerWithoutShadow,
       headerTintColor: "#37a6ff",
-      title:"Change password",
+      title: "Change password",
       tabBarVisible: false
     }
   },
-  
+  Changeemail: {
+    screen: Changeemail,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title: "Change email adress",
+      tabBarVisible: false
+    }
+  },
+  ProfileDetail: {
+    screen: ProfileDetail,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title: "Prfoile Details",
+      tabBarVisible: false
+    }
+  },
+  Professional: {
+    screen: Professional,
+    navigationOptions: {
+      headerStyle: globalStyles.headerWithoutShadow,
+      headerTintColor: "#37a6ff",
+      title: "Professional Details",
+      tabBarVisible: false
+    }
+  }
 });
 
 const MainTabNavigator = TabNavigator(
@@ -255,6 +288,18 @@ const MainTabNavigator = TabNavigator(
     )
   }
 );
+
+const DrawerPage = DrawerNavigator(
+  {
+    TabNavigator: { screen: MainTabNavigator }
+  },
+  {
+    // Register custom drawer component
+    swipeEnabled: false,
+    gesturesEnabled: false,
+    contentComponent: props => <Drawer {...props} />
+  }
+);
 /*
 export const Locumapp = StackNavigator(
   { 
@@ -282,20 +327,17 @@ export const Locumapp = StackNavigator(
 );
 */
 
-
-
 export default (routes = {
-  
   auth: {
     screen: AuthStackNavigator,
     navigationOptions: {
       header: null
     }
-    },
-      Main: {
-        screen: MainTabNavigator,
-        navigationOptions: {
-          header: null
-        }
-   }      
+  },
+  Main: {
+    screen: DrawerPage,
+    navigationOptions: {
+      header: null
+    }
+  }
 });

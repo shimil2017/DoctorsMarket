@@ -53,7 +53,7 @@ class RestClient {
     if (body) {
       settings.body = JSON.stringify(body);
     }
-    console.log(Connection.getBaseUrl() + url, settings)
+    console.log(Connection.getBaseUrl() + url, settings);
     return new Promise(function(fulfill, reject) {
       fetch(Connection.getBaseUrl() + url, settings)
         .then(response => {
@@ -136,7 +136,8 @@ class RestClient {
     if (body) {
       settings.body = body;
     }
-    console.log(Connection.getBaseUrl() + url, body);
+    console.log(settings, Connection.getBaseUrl() + url);
+    debugger;
     return new Promise(function(fulfill, reject) {
       //console.log("url=> ",Connection.getResturl() + url ," requestObject=> ",params, " x-auth-token => ",token, " x-user-id => ",userId )
       fetch(Connection.getBaseUrl() + url, settings)

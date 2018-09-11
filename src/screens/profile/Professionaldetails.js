@@ -16,6 +16,7 @@ import {
   fonts
 } from "../../config";
 const { height, width } = Dimensions.get("window");
+import EIcon from "react-native-vector-icons/Entypo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import StepIndicator from "../../components/stepindicator";
 import { TextField } from "react-native-material-textfield";
@@ -25,26 +26,63 @@ import ActionButton from "react-native-action-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import Icon from "react-native-vector-icons/Ionicons";
 import StepIndicatorView from "../../components/stpeindicatorview";
-import doctorslist from "../../utils/doctorsspecialist";
+
 import { Dropdown } from "react-native-material-dropdown";
 import { connect } from "react-redux";
 import Regex from "../../utils/regex";
-import EIcon from "react-native-vector-icons/Entypo";
 import { SignupUpdate } from "../../actions/Signupactions";
+
+import Button from "../../components/button";
+
+import { toast } from "../../components/toast";
+
+import RestClient from "../../utils/restclient";
 import {
   DocumentPicker,
   DocumentPickerUtil
 } from "react-native-document-picker";
+import doctorslist from "../../utils/doctorsspecialist";
 import ImagePicker from "react-native-image-picker";
-class SignupFormthree extends Component {
+class Professional extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      specialist: { value: "", id: "", locum_type_id: "" },
+      doc1: { uri: "" },
+      doc2: { uri: "" },
+      crbveri: false,
+      gmc: "",
       specialityerror: "",
       crberror: "",
       gmcerror: ""
     };
   }
+
+  componentWillMount() {
+    const { userdata } = this.props;
+    console.log(userdata.specialist);
+    var result = doctorslist.find(obj => {
+      //  console.log(obj.id, userdata.locum_specialties_id);
+      return obj.id == userdata.locum_specialties_id;
+    });
+    console.log(result);
+    //if()
+    this.setState({
+      specialist: {
+        value: result.value,
+        id: result.id,
+        locum_type_id: result.locum_type_id
+      }
+    });
+
+    this.setState({ crbveri: userdata.status == 1 ? true : false });
+    this.setState({ gmc: userdata.gmc_number });
+    if (userdata.doc1) this.setState({ doc1: { uri: userdata.doc1 } });
+    if (userdata.doc2) this.setState({ doc2: { uri: userdata.doc2 } });
+    console.log(this.state.doc1, this.state.doc2);
+    debugger;
+  }
+
   onSubmit = () => {
     Keyboard.dismiss();
     this.setState({
@@ -52,59 +90,8 @@ class SignupFormthree extends Component {
       crberror: "",
       gmcerror: ""
     });
-    //alert(this.props.crbverified)
-    const {
-      specialist,
-      crbverified,
-      gmcnumber,
-      doc1,
-      doc2,
-      navigation: { navigate }
-    } = this.props;
-    const { specialityerror, crberror, gmcerror } = this.state;
-    if (!specialist.value && !specialist.id) {
-      this.setState({
-        specialityerror: "Please select your speciality?"
-      });
-      return;
-    }
-
-    if (crbverified === null) {
-      this.setState({
-        crberror: "Have you verifeid CRB?"
-      });
-      return;
-    }
-    if (gmcnumber.length === 0) {
-      this.setState({
-        gmcerror: "Please enter GMC number"
-      });
-      return;
-    }
-
-    //  console.log(this.props.SignupReducer, "SignupReducer");
-
-    navigate("Signupfour");
   };
 
-  /*  documentchooser = number => {
-    //alert("lpp");+
-    const { SignupUpdate } = this.props;
-    DocumentPicker.show(
-      {
-        filetype: [DocumentPickerUtil.images()]
-      },
-      (error, res) => {
-        // console.log(res, "res");
-        if (number === 1) {
-          SignupUpdate({ prop: "doc1", value: res });
-        } else if (number === 2) {
-          SignupUpdate({ prop: "doc2", value: res });
-        }
-      }
-    );
-  };
-*/
   documentchooser = number => {
     const { SignupUpdate } = this.props;
     const options = {
@@ -128,21 +115,24 @@ class SignupFormthree extends Component {
       } else {
         //  console.log()
         if (number === 1) {
-          SignupUpdate({ prop: "doc1", value: response });
+          this.setState({ doc1: response });
+          //  SignupUpdate({ prop: "doc1", value: response });
         } else if (number === 2) {
-          SignupUpdate({ prop: "doc2", value: response });
+          this.setState({ doc1: response });
+          // SignupUpdate({ prop: "doc2", value: response });
         }
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
       }
     });
   };
+
   render() {
     const {
       navigation: { navigate },
       SignupUpdate
     } = this.props;
-    console.log(this.props.doc1);
+    console.log(this.state.doc1);
     // alert(this.props.crbverified);
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -154,30 +144,10 @@ class SignupFormthree extends Component {
             paddingTop: verticalScale(18)
           }}
         >
-          <StepIndicatorView position={2} />
-          <View
-            style={{
-              flex: 0.2,
-              paddingHorizontal: scale(10),
-              paddingTop: verticalScale(18)
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: fonts.fontPrimaryLight,
-                fontSize: normalize(36),
-                marginVertical: verticalScale(10),
-                color: "#000000",
-                opacity: 0.8
-              }}
-            >
-              Professional Details
-            </Text>
-          </View>
           <View style={{ flex: 0.8, paddingHorizontal: scale(10) }}>
             <Dropdown
               error={this.state.specialityerror}
-              label={"What is you speciality?"}
+              label={"Do you need to change Speciality?"}
               data={doctorslist}
               fontSize={15}
               pickerStyle={{
@@ -185,7 +155,7 @@ class SignupFormthree extends Component {
                 borderColor: "#666666",
                 borderRadius: 5
               }}
-              value={this.props.specialist.value}
+              value={this.state.specialist.value}
               itemTextStyle={[
                 {
                   fontSize: 16,
@@ -193,9 +163,8 @@ class SignupFormthree extends Component {
                 }
               ]}
               onChangeText={(value, index) =>
-                SignupUpdate({
-                  prop: "specialist",
-                  value: { value: value, id: doctorslist[index].id }
+                this.setState({
+                  specialist: { value: value, id: doctorslist[index].id }
                 })
               }
             />
@@ -220,17 +189,13 @@ class SignupFormthree extends Component {
                 }}
               >
                 <Genderfield
-                  selected={this.props.crbverified === true}
-                  onPress={() =>
-                    SignupUpdate({ prop: "crbverified", value: true })
-                  }
+                  selected={this.state.crbveri === true}
+                  onPress={() => this.setState({ crbveri: true })}
                   label="Yes"
                 />
                 <Genderfield
-                  selected={this.props.crbverified === false}
-                  onPress={() =>
-                    SignupUpdate({ prop: "crbverified", value: false })
-                  }
+                  selected={this.state.crbveri === false}
+                  onPress={() => this.setState({ crbveri: false })}
                   label="No"
                 />
               </View>
@@ -246,16 +211,14 @@ class SignupFormthree extends Component {
             </View>
             <TextField
               ref="gmcnumber"
-              value={this.props.gmcnumber}
+              value={this.state.gmc}
               defaultValue={""}
               keyboardType="default"
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
               onFocus={this.onFocus}
-              onChangeText={text =>
-                SignupUpdate({ prop: "gmcnumber", value: text })
-              }
+              onChangeText={text => this.setState({ gmc: text })}
               onSubmitEditing={() => Keyboard.dismiss()}
               returnKeyType="next"
               label="Enter your GMC number"
@@ -296,7 +259,7 @@ class SignupFormthree extends Component {
                   </View>
                 ) : (
                   <Image
-                    source={{ uri: this.props.doc1.uri }}
+                    source={{ uri: this.state.doc1.uri }}
                     style={{
                       width: width - 40,
                       height: verticalScale(200)
@@ -318,20 +281,24 @@ class SignupFormthree extends Component {
             >
               <TouchableOpacity
                 style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center"
+                  flex: 1
                 }}
                 onPress={() => this.documentchooser(2)}
               >
                 {!this.props.doc2 ? (
-                  <View>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
                     <EIcon name="documents" size={20} />
                     <Text>click to upload</Text>
                   </View>
                 ) : (
                   <Image
-                    source={{ uri: this.props.doc2.uri }}
+                    source={{ uri: this.state.doc2.uri }}
                     style={{
                       width: width - 40,
                       height: verticalScale(200)
@@ -341,18 +308,60 @@ class SignupFormthree extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ width, height: verticalScale(80) }} />
+
+          <View
+            style={{
+              flex: 0.2,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Button
+              label={"SAVE"}
+              disabled={false}
+              onPress={this.onSubmit}
+              styles={{
+                button: {
+                  height: verticalScale(50),
+                  width: width - 70,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 5,
+                  paddingLeft: 15,
+                  paddingRight: 15,
+                  borderRadius: 50,
+                  marginVertical: verticalScale(40)
+                },
+
+                label: [
+                  {
+                    fontSize: normalize(16),
+                    color: "#FFFFFF",
+                    letterSpacing: 5
+                  }
+                ]
+              }}
+            />
+          </View>
+          {this.state.loader && (
+            <Spinner visible={this.state.loader} text="Changing email.." />
+          )}
+          <View style={{ width, height: 50, backgroundColor: "#fff" }} />
         </KeyboardAwareScrollView>
-        <NextButton onPress={this.onSubmit} />
       </View>
     );
   }
 }
-const mapStateToProps = ({ SignupReducer }) => {
-  const { specialist, crbverified, gmcnumber, doc1, doc2 } = SignupReducer;
-  return { specialist, crbverified, gmcnumber, SignupReducer, doc1, doc2 };
+
+const mapStateToProps = ({ Loginreducer }) => {
+  const { userid, token, userdata } = Loginreducer;
+  return {
+    userid,
+    token,
+    userdata
+  };
 };
 export default connect(
   mapStateToProps,
-  { SignupUpdate }
-)(SignupFormthree);
+  null
+)(Professional);
